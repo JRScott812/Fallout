@@ -8,7 +8,7 @@ namespace Pip_Boy.Items
 	/// Represents an aid item, such as food, drink, or medicine, which can be used by the player to apply effects.
 	/// </summary>
 	[DataContract]
-	public class Aid : Equipable
+	public record Aid : Equipable
 	{
 		#region Variable(s)
 		/// <summary>
@@ -76,26 +76,6 @@ namespace Pip_Boy.Items
 			/// Smoked aid, such as cigarettes or cigars. May provide minor buffs or roleplay effects.
 			/// </summary>
 			Smoke
-		}
-		#endregion
-
-		#region Override Functions
-		/// <inheritdoc/>
-		public override bool Equals(object? obj)
-		{
-			if (!base.Equals(obj)) return false;
-			if (obj is not Aid other) return false;
-
-			return TypeOfAid == other.TypeOfAid;
-		}
-
-		/// <inheritdoc/>
-		public override int GetHashCode()
-		{
-			return HashCode.Combine(
-				base.GetHashCode(),
-				TypeOfAid
-			);
 		}
 		#endregion
 	}

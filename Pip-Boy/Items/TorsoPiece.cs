@@ -7,7 +7,7 @@ namespace Pip_Boy.Items
 	/// A torso armor
 	/// </summary>
 	[DataContract]
-	public class TorsoPiece : Apparel
+	public record TorsoPiece : Apparel
 	{
 		#region Variable(s)
 		#endregion

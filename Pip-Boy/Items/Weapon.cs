@@ -11,7 +11,7 @@ namespace Pip_Boy.Items
 	/// Can be used to attack <see cref="Entities.Entity"/>s.
 	/// </summary>
 	[DataContract]
-	public class Weapon : Equipable
+	public record Weapon : Equipable
 	{
 		#region Variable(s)
 		/// <summary>
@@ -126,34 +126,6 @@ namespace Pip_Boy.Items
 		#region Override Functions
 		/// <returns><see cref="Equipable.ToString()"/> is there are no <see cref="Modifications"/>.  If there are, then add them to the string.</returns>
 		public override string ToString() => Modifications.Count == 0 ? base.ToString() : PipBoy.DisplayCollection(nameof(Modifications), Modifications);
-
-		/// <inheritdoc/>
-		public override bool Equals(object? obj)
-		{
-			if (!base.Equals(obj)) return false;
-			if (obj is not Weapon other) return false;
-
-			return TypeOfWeapon == other.TypeOfWeapon
-				&& StrengthRequirement == other.StrengthRequirement
-				&& SkillRequirement == other.SkillRequirement
-				&& originalDamage == other.originalDamage
-				&& RateOfFire == other.RateOfFire
-				&& Modifications.SequenceEqual(other.Modifications);
-		}
-
-		/// <inheritdoc/>
-		public override int GetHashCode()
-		{
-			return HashCode.Combine(
-				base.GetHashCode(),
-				TypeOfWeapon,
-				StrengthRequirement,
-				SkillRequirement,
-				originalDamage,
-				RateOfFire,
-				Modifications != null ? string.Join(',', Modifications).GetHashCode() : 0
-			);
-		}
 		#endregion
 	}
 }

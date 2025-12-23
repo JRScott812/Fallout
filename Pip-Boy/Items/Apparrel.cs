@@ -8,7 +8,7 @@ namespace Pip_Boy.Items
 	/// Represents a wearable item, such as armor, that can reduce damage taken by the player or entity.
 	/// </summary>
 	[DataContract]
-	public abstract class Apparel : Equipable
+	public abstract record Apparel : Equipable
 	{
 		#region Variable(s)
 		/// <summary>
@@ -109,30 +109,6 @@ namespace Pip_Boy.Items
 			/// Heavy armor, offering maximum protection but reduced mobility.
 			/// </summary>
 			Heavy
-		}
-		#endregion
-
-		#region Override Functions
-		/// <inheritdoc/>
-		public override bool Equals(object? obj)
-		{
-			if (!base.Equals(obj)) return false;
-			if (obj is not Apparel other) return false;
-
-			return originalDamageThreshold == other.originalDamageThreshold
-				&& pieceType == other.pieceType
-				&& RequiresPowerArmorTraining == other.RequiresPowerArmorTraining;
-		}
-
-		/// <inheritdoc/>
-		public override int GetHashCode()
-		{
-			return HashCode.Combine(
-				base.GetHashCode(),
-				originalDamageThreshold,
-				pieceType,
-				RequiresPowerArmorTraining
-			);
 		}
 		#endregion
 	}

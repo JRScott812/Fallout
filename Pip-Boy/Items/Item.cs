@@ -9,7 +9,7 @@ namespace Pip_Boy.Items
 	/// Provides common properties such as name, weight, value, and icon.
 	/// </summary>
 	[DataContract]
-	public abstract class Item
+	public abstract record Item
 	{
 		#region Variable(s)
 		/// <summary>
@@ -83,28 +83,6 @@ namespace Pip_Boy.Items
 			defaultHeading.AppendLine("\t\tValue: " + (Value == 0 ? "--" : Value.ToString()));
 			defaultHeading.AppendLine("\t\tWeight: " + (Weight == 0 ? "--" : Weight.ToString()));
 			return defaultHeading.ToString();
-		}
-
-		/// <summary>
-		/// Checks if the contents of the 2 Items are the same
-		/// </summary>
-		/// <returns>If the Items are the same.</returns>
-		public override bool Equals(object? obj)
-		{
-			if (obj is not Item other) return false;
-			return Name == other.Name
-				&& Weight == other.Weight
-				&& Value == other.Value
-				&& Icon == other.Icon;
-		}
-
-		/// <summary>
-		/// Gets a hash code for the item based on its properties.
-		/// </summary>
-		/// <returns>The int Hash Code</returns>
-		public override int GetHashCode()
-		{
-			return HashCode.Combine(Name, Weight, Value, Icon);
 		}
 		#endregion
 	}

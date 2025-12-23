@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="..\Inventory Styling.css"?>
 <Ammo xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Pip_Boy.Items">
 	<Icon>🧷</Icon>
 	<Name>10mm Ammo</Name>
 	<Value>1</Value>
 	<Weight>0</Weight>
 	<Condition>1</Condition>
+	<Effects xmlns:d2p1="http://schemas.datacontract.org/2004/07/Pip_Boy.Data_Types" i:nil="true" />
 	<IsEquipped>false</IsEquipped>
+	<originalValue>0</originalValue>
+	<Modification>Standard</Modification>
+	<TypeOfAmmo>Bullet</TypeOfAmmo>
 </Ammo>

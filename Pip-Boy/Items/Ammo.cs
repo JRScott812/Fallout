@@ -9,7 +9,7 @@ namespace Pip_Boy.Items
 	/// Stores the ammo type and any modifications that affect weapon performance.
 	/// </summary>
 	[DataContract]
-	public class Ammo : Equipable
+	public record Ammo : Equipable
 	{
 		#region Variable(s)
 		/// <summary>
@@ -126,26 +126,6 @@ namespace Pip_Boy.Items
 		/// The base item string, followed by ammo type and modification details.
 		/// </returns>
 		public override string ToString() => base.ToString() + $"{Environment.NewLine}\t\tAmmo Type: {TypeOfAmmo}{Environment.NewLine}\t\tAmmo Modification: {Modification}{IconDeterminer.Determine(Modification)}";
-
-		/// <inheritdoc/>
-		public override bool Equals(object? obj)
-		{
-			if (!base.Equals(obj)) return false;
-			if (obj is not Ammo other) return false;
-
-			return TypeOfAmmo == other.TypeOfAmmo
-				&& Modification == other.Modification;
-		}
-
-		/// <inheritdoc/>
-		public override int GetHashCode()
-		{
-			return HashCode.Combine(
-				base.GetHashCode(),
-				TypeOfAmmo,
-				Modification
-			);
-		}
 		#endregion
 	}
 }

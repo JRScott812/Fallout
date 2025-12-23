@@ -8,7 +8,7 @@ namespace Pip_Boy.Items
 	/// Can be junk, sellable items, or crafting components.
 	/// </summary>
 	[DataContract]
-	public class Misc : Item
+	public record Misc : Item
 	{
 		#region Variable(s)
 		/// <summary>
@@ -72,26 +72,6 @@ namespace Pip_Boy.Items
 			/// A package which can be delivered
 			/// </summary>
 			Package
-		}
-		#endregion
-		
-		#region Override Functions
-		/// <inheritdoc/>
-		public override bool Equals(object? obj)
-		{
-			if (!base.Equals(obj)) return false;
-			if (obj is not Misc other) return false;
-
-			return miscType == other.miscType;
-		}
-
-		/// <inheritdoc/>
-		public override int GetHashCode()
-		{
-			return HashCode.Combine(
-				base.GetHashCode(),
-				miscType
-			);
 		}
 		#endregion
 	}
