@@ -16,20 +16,29 @@ namespace PIP_Boy_Tests
 			new Misc("Journal Entry", 1f, 15, Misc.MiscType.Other)
 		];
 
-		public const string serializedItemsFilesFolder = "C:\\Users\\jrsco\\source\\repos\\Pip-Boy\\PIP Boy Tests\\Serialized Files\\Items\\";
+		private static string serializedItemsFilesFolder = string.Empty;
+		private static string[] serializedItemFilePaths = [];
 		public static string[] serializedItemFiles => Directory.GetFiles(serializedItemsFilesFolder, "*.xml");
+
+		[ClassInitialize]
+		public static void ClassInitialize(TestContext context)
+		{
+			string testRunDir = context.TestRunDirectory ?? Directory.GetCurrentDirectory();
+			serializedItemsFilesFolder = Path.Combine(testRunDir, "Serialized Files", "Items") + Path.DirectorySeparatorChar;
+			Directory.CreateDirectory(serializedItemsFilesFolder);
+
+			serializedItemFilePaths = new string[Items.Length];
+
+			for (int i = 0; i < Items.Length; i++)
+			{
+				serializedItemFilePaths[i] = PipBoy.ToFile(serializedItemsFilesFolder, Items[i]);
+			}
+		}
 
 		[TestMethod]
 		public void ItemSerialization()
 		{
-			string[] filePaths = new string[Items.Length];
-
-			for (int i = 0; i < Items.Length; i++)
-			{
-				filePaths[i] = PipBoy.ToFile(serializedItemsFilesFolder, Items[i]);
-			}
-
-			foreach (string filePath in filePaths)
+			foreach (string filePath in serializedItemFilePaths)
 			{
 				Assert.IsTrue(serializedItemFiles.Contains(filePath));
 			}
@@ -72,7 +81,11 @@ namespace PIP_Boy_Tests
 					_ => throw new InvalidOperationException($"Unknown type: {type.Name}")
 				};
 
-				Assert.AreEqual(item, deserialized);
+				Assert.IsNotNull(deserialized, $"Deserialized item should not be null for {item.Name}");
+				Assert.AreEqual(item.GetType(), deserialized.GetType(), $"Types should match for {item.Name}");
+				Assert.AreEqual(item.Name, deserialized.Name, $"Names should match for {item.Name}");
+				Assert.AreEqual(item.Weight, deserialized.Weight, $"Weights should match for {item.Name}");
+				Assert.AreEqual(item.Value, deserialized.Value, $"Values should match for {item.Name}");
 			}
 		}
 	}

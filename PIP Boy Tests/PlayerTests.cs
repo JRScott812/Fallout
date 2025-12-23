@@ -8,14 +8,23 @@ public class PlayerTests
 {
 	public static Player player = new();
 
-	public const string serializedPlayerFileFolder = "C:\\Users\\jrsco\\source\\repos\\Pip-Boy\\PIP Boy Tests\\Serialized Files\\Player\\";
+	private static string serializedPlayerFileFolder = string.Empty;
+	private static string serializedFilePath = string.Empty;
+
+	[ClassInitialize]
+	public static void ClassInitialize(TestContext context)
+	{
+		string testRunDir = context.TestRunDirectory ?? Directory.GetCurrentDirectory();
+		serializedPlayerFileFolder = Path.Combine(testRunDir, "Serialized Files", "Player") + Path.DirectorySeparatorChar;
+		Directory.CreateDirectory(serializedPlayerFileFolder);
+		serializedFilePath = PipBoy.ToFile(serializedPlayerFileFolder, player);
+	}
 
 	[TestMethod]
 	public void PlayerSerialization()
 	{
-		string filePath = PipBoy.ToFile(serializedPlayerFileFolder, player);
-		Assert.IsTrue(Directory.EnumerateFiles(serializedPlayerFileFolder).Contains(filePath));
-		Assert.AreEqual(player.GetType(), PipBoy.GetTypeFromXML(filePath), "Deserialized type does not match expected Player type.");
+		Assert.IsTrue(Directory.EnumerateFiles(serializedPlayerFileFolder).Contains(serializedFilePath));
+		Assert.AreEqual(player.GetType(), PipBoy.GetTypeFromXML(serializedFilePath), "Deserialized type does not match expected Player type.");
 	}
 
 	[TestMethod]

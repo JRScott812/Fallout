@@ -30,17 +30,36 @@ public class EntityTests
 		new BloatFly()
 	];
 
-	public const string serializedEntitiesFilesFolder = "C:\\Users\\jrsco\\source\\repos\\Pip-Boy\\PIP Boy Tests\\Serialized Files\\Entities\\";
-
+	private static string serializedEntitiesFilesFolder = string.Empty;
+	private static string[] serializedEntityFilePaths = [];
 	public static string[] serializedEntityFiles => Directory.GetFiles(serializedEntitiesFilesFolder, "*.xml");
+
+	[ClassInitialize]
+	public static void ClassInitialize(TestContext context)
+	{
+		string testRunDir = context.TestRunDirectory ?? Directory.GetCurrentDirectory();
+		serializedEntitiesFilesFolder = Path.Combine(testRunDir, "Serialized Files", "Entities") + Path.DirectorySeparatorChar;
+		Directory.CreateDirectory(serializedEntitiesFilesFolder);
+
+		serializedEntityFilePaths = new string[Entities.Length];
+
+		for (int i = 0; i < Entities.Length; i++)
+		{
+			serializedEntityFilePaths[i] = PipBoy.ToFile(serializedEntitiesFilesFolder, Entities[i]);
+		}
+	}
 
 	[TestMethod]
 	public void EntitySerialization()
 	{
-		foreach (Entity entity in Entities)
+		foreach (string filePath in serializedEntityFilePaths)
 		{
-			// Check that serialization occurred and that the types match
-			Assert.AreEqual(entity.GetType(), PipBoy.GetTypeFromXML(PipBoy.ToFile(serializedEntitiesFilesFolder, entity)));
+			// Find the corresponding entity by matching the filename
+			string fileName = Path.GetFileNameWithoutExtension(filePath);
+			Entity? entity = Entities.FirstOrDefault(e => e.GetType().Name == fileName);
+			
+			Assert.IsNotNull(entity, $"Could not find entity for file: {fileName}");
+			Assert.AreEqual(entity.GetType(), PipBoy.GetTypeFromXML(filePath));
 		}
 	}
 
