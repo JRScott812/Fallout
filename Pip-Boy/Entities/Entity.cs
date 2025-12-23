@@ -99,7 +99,7 @@ namespace Pip_Boy.Entities
 		public ushort MaxHealth { get; private set; }
 
 		/// <summary>
-		/// THe current health the <see cref="Entity"/> has.
+		/// The current health the <see cref="Entity"/> has.
 		/// </summary>
 		[DataMember]
 		public int CurrentHealth { get; private set; }

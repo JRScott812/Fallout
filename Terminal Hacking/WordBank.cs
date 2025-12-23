@@ -1,5 +1,8 @@
 ﻿namespace Terminal_Minigame
 {
+	/// <summary>
+	/// Stores word banks for different difficulty levels in the terminal hacking minigame.
+	/// </summary>
 	internal readonly struct WordBank()
 	{
 		/// <summary>

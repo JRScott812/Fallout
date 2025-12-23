@@ -5,6 +5,9 @@ using System.Threading;
 
 namespace Terminal_Minigame
 {
+	/// <summary>
+	/// Main program for the terminal hacking minigame.
+	/// </summary>
 	internal class Program
 	{
 		/// <summary>
@@ -44,11 +47,15 @@ namespace Terminal_Minigame
 		public static readonly Random random = new();
 		public static readonly WordBank wordBank = new();
 
+		/// <summary>
+		/// Main entry point for the terminal hacking minigame.
+		/// </summary>
 		static void Main()
 		{
 			Console.ForegroundColor = ConsoleColor.Green;
 
-			string[] dataEntryFilePaths = Directory.GetFiles("C:\\Users\\jrsco\\source\\repos\\Pip-Boy\\Terminal Hacking\\Data Entries\\", "*.txt");
+			string dataEntriesPath = Path.Combine(AppContext.BaseDirectory, "Data Entries");
+			string[] dataEntryFilePaths = Directory.GetFiles(dataEntriesPath, "*.txt");
 			Data[] dataEntries = new Data[dataEntryFilePaths.Length];
 
 			for (int i = 0; i < dataEntryFilePaths.Length; i++)
@@ -144,7 +151,7 @@ namespace Terminal_Minigame
 		/// </summary>
 		/// <param name="guess">The guessed sequence</param>
 		/// <param name="word">The correct sequence</param>
-		/// <returns></returns>
+		/// <returns>The number of matching characters.</returns>
 		static byte Compare(string guess, string word)
 		{
 			byte similarity = 0;
@@ -162,6 +169,10 @@ namespace Terminal_Minigame
 			return similarity;
 		}
 
+		/// <summary>
+		/// Slowly types out text character-by-character with a delay.
+		/// </summary>
+		/// <param name="text">The text to display.</param>
 		static void SlowType(string text)
 		{
 			foreach (char character in text)
@@ -171,6 +182,9 @@ namespace Terminal_Minigame
 			}
 		}
 
+		/// <summary>
+		/// Writes a test file containing random gibberish and words for the hacking minigame.
+		/// </summary>
 		static void WriteFile()
 		{
 			FileStream fileStream = new(".\\ACCOUNTS.F", FileMode.Create, FileAccess.Write);
@@ -189,6 +203,9 @@ namespace Terminal_Minigame
 			fileStream.Close();
 		}
 
+		/// <summary>
+		/// Reads and displays the contents of the ACCOUNTS.F file in a hex dump format.
+		/// </summary>
 		static void ReadFile()
 		{
 			FileStream fileStream = new(".\\ACCOUNTS.F", FileMode.Open, FileAccess.Read);
@@ -216,6 +233,11 @@ namespace Terminal_Minigame
 			fileStream.Close();
 		}
 
+		/// <summary>
+		/// Converts a string to a byte array.
+		/// </summary>
+		/// <param name="stringToTranslate">The string to convert.</param>
+		/// <returns>A byte array representation of the string.</returns>
 		static byte[] StringToByteArray(string stringToTranslate)
 		{
 			byte[] tempArray = new byte[stringToTranslate.Length];
@@ -226,6 +248,11 @@ namespace Terminal_Minigame
 			return tempArray;
 		}
 
+		/// <summary>
+		/// Generates random gibberish characters for the hacking minigame display.
+		/// </summary>
+		/// <param name="length">The number of gibberish characters to generate.</param>
+		/// <returns>A byte array containing random gibberish characters.</returns>
 		static byte[] GenerateGibberish(int length)
 		{
 			byte[] tempArray = new byte[length];
@@ -236,6 +263,12 @@ namespace Terminal_Minigame
 			return tempArray;
 		}
 
+		/// <summary>
+		/// Prints ASCII representation of bytes in the buffer, replacing non-printable characters with a period.
+		/// </summary>
+		/// <param name="buffer">The byte buffer to read from.</param>
+		/// <param name="start">The starting index in the buffer.</param>
+		/// <param name="end">The ending index in the buffer.</param>
 		static void PrintAscii(byte[] buffer, int start, int end)
 		{
 			for (int i = start; i < end; i++)

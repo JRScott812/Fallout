@@ -1,5 +1,8 @@
 ﻿namespace Map
 {
+	/// <summary>
+	/// Enumerates various amenities that can be searched for on a map (e.g., restaurants, hospitals, ATMs).
+	/// </summary>
 	public enum Amenities
 	{
 		prison,

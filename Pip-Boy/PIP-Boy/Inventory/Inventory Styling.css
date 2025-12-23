@@ -6,7 +6,7 @@ body {
     padding: 20px;
 }
 
-Name, Weight, Value, Condition, IsEquipped, Effects, Damage, RateOfFire, DPS, DamageThreshold, RequiresPowerArmorTraining, originalValue, DamageThreshold, StrenghtRequirement, SkillsRequirement, TypeOfWeapon, originalDamageThreshold, TypeOfAmmo, AmmoModification, TypeOfAid {
+Name, Weight, Value, Condition, IsEquipped, Effects, Damage, RateOfFire, DPS, DamageThreshold, RequiresPowerArmorTraining, originalValue, StrengthRequirement, SkillRequirement, TypeOfWeapon, originalDamageThreshold, TypeOfAmmo, AmmoModification, TypeOfAid {
     display: block; /* Ensure each variable is on a new line */
     margin-bottom: 10px;
     color: #34bd32;
@@ -68,7 +68,7 @@ RequiresPowerArmorTraining::before {
 }
 
 StrengthRequirement::before {
-    content: "Stength Requirement: "
+    content: "Strength Requirement: "
 }
 
 SkillRequirement::before {

@@ -23,71 +23,103 @@ namespace Pip_Boy.Objects
 	/// </summary>
 	public class PipBoy
 	{
+		#region Constants
+		/// <summary>
+		/// Index of the menu navigation sound in the sounds array.
+		/// </summary>
+		private const int MENU_SOUND_INDEX = 1;
+
+		/// <summary>
+		/// Index of the faction navigation up sound in the sounds array.
+		/// </summary>
+		private const int FACTION_UP_SOUND_INDEX = 2;
+
+		/// <summary>
+		/// Index of the faction navigation down sound in the sounds array.
+		/// </summary>
+		private const int FACTION_DOWN_SOUND_INDEX = 3;
+
+		/// <summary>
+		/// Index of the boot sound in the sounds array.
+		/// </summary>
+		private const int BOOT_SOUND_INDEX = 2;
+
+		/// <summary>
+		/// Index of the loading sound in the sounds array.
+		/// </summary>
+		private const int LOADING_SOUND_INDEX = 6;
+
+		/// <summary>
+		/// Index of the startup complete sound in the sounds array.
+		/// </summary>
+		private const int STARTUP_COMPLETE_SOUND_INDEX = 8;
+		#endregion
+
 		#region System Info
 		/// <summary>
 		/// The Current <see cref="DateOnly"/> and <see cref="TimeOnly"/>.
 		/// </summary>
-		public DateTime dateTime;
+		public DateTime DateTime { get; private set; }
 		#endregion
 
 		#region Objects
 		/// <summary>
 		/// The <c>Player</c> object tied to the PIP-Boy.
 		/// </summary>
-		public Player player;
+		public Player Player { get; private set; }
 
 		/// <summary>
 		/// Controls music.
 		/// </summary>
-		public Radio radio;
+		public Radio Radio { get; private set; }
 
 		/// <summary>
 		/// Displays points of interest.
 		/// </summary>
-		public Map map;
+		public Map Map { get; private set; }
 
 		/// <summary>
 		/// Controls <c>PIPBoy</c> sound effects.
 		/// </summary>
-		public SoundPlayer soundEffects;
+		public SoundPlayer SoundEffects { get; private set; }
 		#endregion
 
 		#region Lists
 		/// <summary>
 		/// A list of all unfinished quests, it can be added to, and quests will be removed and added to the `finishedQuests`, once finished.
 		/// </summary>
-		public List<Quest> quests = [];
+		public List<Quest> Quests { get; } = [];
 
 		/// <summary>
 		/// A list of all finished quests, which will grow.
 		/// </summary>
-		public List<Quest> finishedQuests = [];
+		public List<Quest> FinishedQuests { get; } = [];
 
 		/// <summary>
 		/// An array of all factions.  Descriptions are taken from the Fallout Wiki (phrasing breaks immersion).  I might change these later.
 		/// </summary>
-		public Faction[] factions = [];
+		public Faction[] Factions { get; private set; } = [];
 
 		/// <summary>
 		/// The current index of the selected <see cref="Faction"/> in the <c>General</c> sub page of the <c>STAT</c> page
 		/// </summary>
-		public byte factionIndex = 0;
+		public byte FactionIndex { get; set; } = 0;
 
 		#region Sounds
 		/// <summary>
-		/// Sound
+		/// Sound effects array for UI interactions.
 		/// </summary>
-		public string[] sounds;
+		public string[] Sounds { get; private set; }
 
 		/// <summary>
 		/// Sounds for static between songs and menu navigation
 		/// </summary>
-		public string[] staticSounds;
+		public string[] StaticSounds { get; private set; }
 
 		/// <summary>
 		/// Geiger click sounds, for when in the RAD menu
 		/// </summary>
-		public string[] radiationSounds;
+		public string[] RadiationSounds { get; private set; }
 		#endregion
 		#endregion
 
@@ -95,23 +127,23 @@ namespace Pip_Boy.Objects
 		/// <summary>
 		/// The directory from which files will be loaded and saved
 		/// </summary>
-		public readonly string activeDirectory;
+		public string ActiveDirectory { get; }
 
 		/// <summary>
 		/// The directory from which data files will be loaded and saved
 		/// </summary>
-		public readonly string dataDirectory;
+		public string DataDirectory { get; }
 
 		/// <summary>
 		/// The directory from which factions will be loaded and saved
 		/// </summary>
-		public readonly string factionDirectory;
+		public string FactionDirectory { get; }
 		#endregion
 
 		/// <summary>
 		/// The path of the player's <c>*.xml</c> file.
 		/// </summary>
-		public readonly string playerFilePath;
+		public string PlayerFilePath { get; private set; }
 
 		/// <summary>
 		/// The color of the <c>PIPBoy</c>'s text
@@ -124,28 +156,28 @@ namespace Pip_Boy.Objects
 		/// <param name="boot">Whether to show the boot screen.</param>
 		public PipBoy(string workingDirectory, ConsoleColor color, bool boot)
 		{
-			dataDirectory = workingDirectory + "Data\\";
-			factionDirectory = workingDirectory + "Factions\\";
+			DataDirectory = Path.Combine(workingDirectory, "Data") + Path.DirectorySeparatorChar;
+			FactionDirectory = Path.Combine(workingDirectory, "Factions") + Path.DirectorySeparatorChar;
 
-			string[] filePaths = Directory.GetFiles(factionDirectory, "*.txt");
-			factions = new Faction[filePaths.Length];
+			string[] filePaths = Directory.GetFiles(FactionDirectory, "*.txt");
+			Factions = new Faction[filePaths.Length];
 			// Factions
 			for (int i = 0; i < filePaths.Length; i++)
 			{
-				factions[i] = new(Path.GetFileNameWithoutExtension(filePaths[i]), File.ReadAllText(filePaths[i]));
+				Factions[i] = new(Path.GetFileNameWithoutExtension(filePaths[i]), File.ReadAllText(filePaths[i]));
 			}
 
 			// Sounds
-			sounds = Directory.GetFiles(workingDirectory + "Sounds\\", "*.wav");
-			staticSounds = Directory.GetFiles(workingDirectory + "Sounds\\static\\", "*wav");
-			radiationSounds = Directory.GetFiles(workingDirectory + "Sounds\\radiation\\", "*wav");
+			Sounds = Directory.GetFiles(Path.Combine(workingDirectory, "Sounds"), "*.wav");
+			StaticSounds = Directory.GetFiles(Path.Combine(workingDirectory, "Sounds", "static"), "*.wav");
+			RadiationSounds = Directory.GetFiles(Path.Combine(workingDirectory, "Sounds", "radiation"), "*.wav");
 
-			radio = new(workingDirectory + "Songs\\");
-			map = new(25, 50, "PIP-Boy\\Map Locations\\");
-			soundEffects = new();
+			Radio = new(Path.Combine(workingDirectory, "Songs") + Path.DirectorySeparatorChar);
+			Map = new(25, 50, Path.Combine("PIP-Boy", "Map Locations") + Path.DirectorySeparatorChar);
+			SoundEffects = new();
 
-			activeDirectory = workingDirectory;
-			dateTime = DateTime.Now;
+			ActiveDirectory = workingDirectory;
+			DateTime = System.DateTime.Now;
 			Color = color;
 
 			Console.ForegroundColor = Color;
@@ -159,16 +191,16 @@ namespace Pip_Boy.Objects
 
 			try
 			{
-				playerFilePath = Directory.GetFiles(activeDirectory, "*.xml")[0];
-				player = FromFile<Player>(playerFilePath);
-				player.Inventory = new(activeDirectory + "Inventory\\", player);
+				PlayerFilePath = Directory.GetFiles(ActiveDirectory, "*.xml")[0];
+				Player = FromFile<Player>(PlayerFilePath);
+				Player.Inventory = new(Path.Combine(ActiveDirectory, "Inventory") + Path.DirectorySeparatorChar, Player);
 			}
 			catch (IndexOutOfRangeException)
 			{
-				player = Player.CreatePlayer(activeDirectory);
+				Player = Player.CreatePlayer(ActiveDirectory);
 			}
 
-			map.MovePlayer(null, null, player);
+			Map.MovePlayer(null, null, Player);
 		}
 		#endregion
 
@@ -239,35 +271,35 @@ namespace Pip_Boy.Objects
 
 					#region Radio
 					case ConsoleKey.Enter when currentPage == Pages.DATA && dataPage == DataPages.Radio:
-						radio.Play();
+						Radio.Play();
 						break;
 
 					case ConsoleKey.Add when currentPage == Pages.DATA && dataPage == DataPages.Radio:
-						radio.AddSong(this);
+						Radio.AddSong(this);
 						break;
 
-					case ConsoleKey.UpArrow when radio.songIndex > 0:
-						radio.ChangeSong(false);
-						radio.Play();
+					case ConsoleKey.UpArrow when Radio.songIndex > 0:
+						Radio.ChangeSong(false);
+						Radio.Play();
 						break;
-					case ConsoleKey.DownArrow when radio.songIndex < radio.songs.Length:
-						radio.ChangeSong(true);
-						radio.Play();
+					case ConsoleKey.DownArrow when Radio.songIndex < Radio.songs.Length:
+						Radio.ChangeSong(true);
+						Radio.Play();
 						break;
 					#endregion
 
 					#region Map
 					case ConsoleKey.NumPad8 when currentPage == Pages.DATA && dataPage == DataPages.Map:
-						map.MovePlayer(true, null, player);
+						Map.MovePlayer(true, null, Player);
 						break;
 					case ConsoleKey.NumPad2 when currentPage == Pages.DATA && dataPage == DataPages.Map:
-						map.MovePlayer(false, null, player);
+						Map.MovePlayer(false, null, Player);
 						break;
 					case ConsoleKey.NumPad4 when currentPage == Pages.DATA && dataPage == DataPages.Map:
-						map.MovePlayer(null, false, player);
+						Map.MovePlayer(null, false, Player);
 						break;
 					case ConsoleKey.NumPad6 when currentPage == Pages.DATA && dataPage == DataPages.Map:
-						map.MovePlayer(null, true, player);
+						Map.MovePlayer(null, true, Player);
 						break;
 					#endregion
 
@@ -294,7 +326,7 @@ namespace Pip_Boy.Objects
 		/// <param name="right">Move right?</param>
 		public void ChangeMenu(bool right)
 		{
-			PlaySound(sounds[^1]);
+			PlaySound(Sounds[^MENU_SOUND_INDEX]);
 			if (right && currentPage < Pages.DATA)
 			{
 				currentPage++;
@@ -311,7 +343,7 @@ namespace Pip_Boy.Objects
 		/// <param name="right">Move right?</param>
 		public void ChangeSubMenu(bool right)
 		{
-			PlaySound(sounds[^1]);
+			PlaySound(Sounds[^MENU_SOUND_INDEX]);
 
 			switch (currentPage)
 			{
@@ -322,11 +354,11 @@ namespace Pip_Boy.Objects
 					statPage--;
 					break;
 
-				case Pages.ITEMS when right && player.Inventory.itemPage < Inventory.ItemsPages.Misc:
-					player.Inventory.itemPage++;
+				case Pages.ITEMS when right && Player.Inventory.itemPage < Inventory.ItemsPages.Misc:
+					Player.Inventory.itemPage++;
 					break;
-				case Pages.ITEMS when !right && player.Inventory.itemPage > Inventory.ItemsPages.Weapons:
-					player.Inventory.itemPage--;
+				case Pages.ITEMS when !right && Player.Inventory.itemPage > Inventory.ItemsPages.Weapons:
+					Player.Inventory.itemPage--;
 					break;
 
 				case Pages.DATA when right && dataPage < DataPages.Radio:
@@ -344,16 +376,16 @@ namespace Pip_Boy.Objects
 		/// <param name="up">Move up the list</param>
 		public void ChangeSelectedFaction(bool up)
 		{
-			if (!up && factionIndex > 0)
+			if (!up && FactionIndex > 0)
 			{
-				factionIndex--;
-				PlaySound(sounds[^12]);
+				FactionIndex--;
+				PlaySound(Sounds[^FACTION_DOWN_SOUND_INDEX]);
 			}
 
-			if (up && factionIndex < factions.Length - 1)
+			if (up && FactionIndex < Factions.Length - 1)
 			{
-				factionIndex++;
-				PlaySound(sounds[^13]);
+				FactionIndex++;
+				PlaySound(Sounds[^FACTION_UP_SOUND_INDEX]);
 			}
 		}
 		#endregion
@@ -366,7 +398,7 @@ namespace Pip_Boy.Objects
 		public string ShowMenu() => currentPage switch
 		{
 			Pages.STATS => ShowStats(),
-			Pages.ITEMS => player.Inventory.ToString(),
+			Pages.ITEMS => Player.Inventory.ToString(),
 			Pages.DATA => ShowData(),
 			_ => throw new NotImplementedException()
 		};
@@ -402,7 +434,7 @@ namespace Pip_Boy.Objects
 			foreach (string item in subMenuItems)
 			{
 				Console.Write('\t');
-				if (item == statPage.ToString() || item == player.Inventory.itemPage.ToString() || item == dataPage.ToString())
+				if (item == statPage.ToString() || item == Player.Inventory.itemPage.ToString() || item == dataPage.ToString())
 				{
 					Highlight(item, false);
 				}
@@ -431,26 +463,26 @@ namespace Pip_Boy.Objects
 		/// <returns>The corresponding string</returns>
 		public string ShowStats() => statPage switch
 		{
-			StatsPages.Status => player.ShowStatus(),
-			StatsPages.SPECIAL => DisplayCollection(nameof(player.SPECIAL), player.SPECIAL),
-			StatsPages.Skills => DisplayCollection(nameof(player.Skills), player.Skills),
-			StatsPages.Perks => DisplayCollection(nameof(player.Perks), player.Perks),
+			StatsPages.Status => Player.ShowStatus(),
+			StatsPages.SPECIAL => DisplayCollection(nameof(Player.SPECIAL), Player.SPECIAL),
+			StatsPages.Skills => DisplayCollection(nameof(Player.Skills), Player.Skills),
+			StatsPages.Perks => DisplayCollection(nameof(Player.Perks), Player.Perks),
 			StatsPages.General => ShowFactions(),
 			_ => throw new NotImplementedException()
 		};
 
 		/// <summary>
-		/// Show all the factions and there statuses
+		/// Show all the factions and their statuses
 		/// </summary>
 		/// <returns>A table of the factions</returns>
 		public string ShowFactions()
 		{
 			StringBuilder stringBuilder = new();
-			foreach (Faction faction in factions)
+			foreach (Faction faction in Factions)
 			{
 				stringBuilder.AppendLine(faction.ToString());
 			}
-			return stringBuilder.ToString() + Environment.NewLine + factions[factionIndex].Description;
+			return stringBuilder.ToString() + Environment.NewLine + Factions[FactionIndex].Description;
 		}
 
 		/// <summary>
@@ -459,10 +491,10 @@ namespace Pip_Boy.Objects
 		/// <returns>The corresponding string</returns>
 		public string ShowData() => dataPage switch
 		{
-			DataPages.Map => map.ToString(),
+			DataPages.Map => Map.ToString(),
 			DataPages.Quests => ShowQuests(),
 			DataPages.Misc => ShowDataNotes(),
-			DataPages.Radio => radio.ToString(),
+			DataPages.Radio => Radio.ToString(),
 			_ => throw new NotImplementedException()
 		};
 
@@ -473,7 +505,7 @@ namespace Pip_Boy.Objects
 		public string ShowQuests()
 		{
 			StringBuilder stringBuilder = new();
-			foreach (Quest quest in quests)
+			foreach (Quest quest in Quests)
 			{
 				stringBuilder.AppendLine(quest.ToString());
 			}
@@ -487,7 +519,7 @@ namespace Pip_Boy.Objects
 		public string ShowDataNotes()
 		{
 			StringBuilder stringBuilder = new();
-			foreach (string data in Directory.GetFiles(dataDirectory))
+			foreach (string data in Directory.GetFiles(DataDirectory))
 			{
 				string extension = Path.GetExtension(data);
 				string icon = extension switch
@@ -739,9 +771,9 @@ namespace Pip_Boy.Objects
 		/// <param name="path">The path to the <c>*.wav</c> file.</param>
 		public void PlaySound(string path)
 		{
-			soundEffects.SoundLocation = path;
-			soundEffects.Load();
-			soundEffects.Play();
+			SoundEffects.SoundLocation = path;
+			SoundEffects.Load();
+			SoundEffects.Play();
 		}
 
 		/// <summary>
@@ -749,14 +781,14 @@ namespace Pip_Boy.Objects
 		/// </summary>
 		public void Boot()
 		{
-			PlaySound(sounds[2]);
+			PlaySound(Sounds[BOOT_SOUND_INDEX]);
 
 			SlowType("PIP-Boy 3000 MKIV");
 			SlowType("Copyright 2075 RobCo Industries");
 			SlowType("64kb Memory");
 			SlowType(new string('-', Console.WindowWidth));
 
-			PlaySound(sounds[6]);
+			PlaySound(Sounds[LOADING_SOUND_INDEX]);
 
 			Console.Clear();
 			Console.WriteLine();
@@ -768,7 +800,7 @@ namespace Pip_Boy.Objects
 			Thread.Sleep(2500);
 			Console.Clear();
 
-			PlaySound(sounds[8]);
+			PlaySound(Sounds[STARTUP_COMPLETE_SOUND_INDEX]);
 		}
 
 		/// <summary>
@@ -776,20 +808,19 @@ namespace Pip_Boy.Objects
 		/// </summary>
 		public void Shutdown()
 		{
-			PlaySound(sounds[2]);
+			PlaySound(Sounds[BOOT_SOUND_INDEX]);
 
 			SlowType("Shutting Down...");
 			SlowType(new string('-', Console.WindowWidth));
 			Thread.Sleep(1000);
 
-			player.SavePlayerPerks();
-			player.Inventory.Save();
-			ToFile(activeDirectory, player);
+			Player.SavePlayerPerks();
+			Player.Inventory.Save();
+			ToFile(ActiveDirectory, Player);
 		}
 		#endregion
 
 		#region File Stuff
-		#region To File
 		/// <summary>
 		/// Serializes the <see cref="object"/> to an <c>*.xml</c> file.
 		/// </summary>
@@ -806,36 +837,37 @@ namespace Pip_Boy.Objects
 					Entity entity => entity.Name,
 					Perk perk => perk.Name,
 					Location location => location.Name,
-					_ => throw new Exception("Object is invalid type!")
+					_ => throw new ArgumentException("Object must be Item, Entity, Perk, or Location type.", nameof(obj))
 				};
 
-				if (name == string.Empty || name is null)
+				if (string.IsNullOrEmpty(name))
 				{
 					name = type.Name;
 				}
 
-				string filePath = folderPath + name + ".xml";
-				DataContractSerializer x = new(type);
+				string filePath = Path.Combine(folderPath, $"{name}.xml");
+				DataContractSerializer serializer = new(type);
 
 				XmlWriterSettings writerSettings = new()
 				{
-					Indent = true,              // Indent elements for readability
-					IndentChars = "\t",         // Use tabs for indentation
-					NewLineChars = "\n",        // Use newline for element endings
-					NewLineHandling = NewLineHandling.Replace, // Standardize newline handling
-					OmitXmlDeclaration = false, // Include XML declaration
-					NewLineOnAttributes = false, // Keep attributes on the same line
+					Indent = true,
+					IndentChars = "\t",
+					NewLineChars = "\n",
+					NewLineHandling = NewLineHandling.Replace,
+					OmitXmlDeclaration = false,
+					NewLineOnAttributes = false,
 					CloseOutput = true,
 				};
 
-				XmlWriter writer = XmlWriter.Create(filePath, writerSettings);
-				writer.WriteProcessingInstruction("xml-stylesheet", "type=\"text/css\" href=\"..\\Inventory Styling.css\"");
-				x.WriteObject(writer, obj);
-				writer.Close();
+				using (XmlWriter writer = XmlWriter.Create(filePath, writerSettings))
+				{
+					writer.WriteProcessingInstruction("xml-stylesheet", "type=\"text/css\" href=\"..\\Inventory Styling.css\"");
+					serializer.WriteObject(writer, obj);
+				}
 
 				return filePath;
 			}
-			throw new DirectoryNotFoundException("Folder not found. " + folderPath);
+			throw new DirectoryNotFoundException($"Folder not found: {folderPath}");
 		}
 
 		/// <summary>
@@ -878,7 +910,7 @@ namespace Pip_Boy.Objects
 		/// <param name="filePath">The path to the file</param>
 		/// <returns>The <see cref="Type"/> from the tag name.</returns>
 		/// <exception cref="NullReferenceException">If no head object tag is found.</exception>
-		/// <exception cref="FormatException">IF the file is no <c>*.xml</c>.</exception>
+		/// <exception cref="FormatException">If the file is not <c>*.xml</c>.</exception>
 		public static Type GetTypeFromXML(string filePath)
 		{
 			if (File.Exists(filePath))
@@ -922,7 +954,6 @@ namespace Pip_Boy.Objects
 			}
 			throw new FileNotFoundException("File not found.", filePath);
 		}
-		#endregion
 		#endregion
 
 		#region Enums

@@ -5,23 +5,44 @@ using System.Text.Json.Serialization;
 
 namespace Weather
 {
+	/// <summary>
+	/// Represents weather data from the OpenWeatherMap API, including coordinates, weather conditions, temperature, wind, clouds, and more.
+	/// </summary>
 	public class WeatherData
 	{
+		/// <summary>
+		/// The geographical coordinates (longitude and latitude) of the location.
+		/// </summary>
 		[JsonPropertyName("coord")]
 		[JsonConverter(typeof(Vector2Converter))]
 		public Vector2 Coordinates { get; set; } = new();
 
+		/// <summary>
+		/// Represents a single weather condition.
+		/// </summary>
 		public class Weather
 		{
+			/// <summary>
+			/// The weather condition ID from the API.
+			/// </summary>
 			[JsonPropertyName("id")]
 			public int Id { get; set; }
 
+			/// <summary>
+			/// The main weather category (e.g., "Rain", "Clear", "Clouds").
+			/// </summary>
 			[JsonPropertyName("main")]
-			public string main { get; set; } = string.Empty;
+			public string Main { get; set; } = string.Empty;
 
+			/// <summary>
+			/// A detailed description of the weather condition.
+			/// </summary>
 			[JsonPropertyName("description")]
 			public string Description { get; set; } = string.Empty;
 
+			/// <summary>
+			/// Gets an emoji icon representing the weather condition based on the weather ID.
+			/// </summary>
 			public string Icon => Id.ToString()[0] switch
 			{
 				'2' => "⛈️",
@@ -32,15 +53,25 @@ namespace Weather
 				_ => "☀️/🌕"
 			};
 
-			public override string ToString() => $"Weather: {main} ({Description}), Icon: {Icon}";
+			/// <inheritdoc/>
+			public override string ToString() => $"Weather: {Main} ({Description}), Icon: {Icon}";
 		}
 
+		/// <summary>
+		/// An array of weather conditions at this location.
+		/// </summary>
 		[JsonPropertyName("weather")]
 		public Weather[] Weathers { get; set; } = [];
 
+		/// <summary>
+		/// The base station (internal parameter from API).
+		/// </summary>
 		[JsonPropertyName("base")]
 		public string Base { get; set; } = string.Empty;
 
+		/// <summary>
+		/// Represents main weather measurements including temperature, pressure, and humidity.
+		/// </summary>
 		public class Main
 		{
 			[JsonPropertyName("temp")]
@@ -73,12 +104,21 @@ namespace Weather
 				$"Sea Level: {SeaLevel} hPa, Ground Level: {GroundLevel} hPa";
 		}
 
+		/// <summary>
+		/// Main weather data including temperature, pressure, and humidity measurements.
+		/// </summary>
 		[JsonPropertyName("main")]
 		public Main MainData { get; set; } = new();
 
+		/// <summary>
+		/// Visibility in meters.
+		/// </summary>
 		[JsonPropertyName("visibility")]
 		public int Visibility { get; set; }
 
+		/// <summary>
+		/// Represents wind data including speed and direction.
+		/// </summary>
 		public class Wind
 		{
 			[JsonPropertyName("speed")]
@@ -91,14 +131,26 @@ namespace Weather
 				$"Speed: {Speed} m/s, Direction: {Deg}°" + (Speed > 30 ? "💨" : string.Empty);
 		}
 
+		/// <summary>
+		/// Wind data for this location.
+		/// </summary>
 		[JsonPropertyName("wind")]
 		public Wind WindData { get; set; } = new();
 
+		/// <summary>
+		/// Represents cloud coverage data.
+		/// </summary>
 		public class Clouds
 		{
+			/// <summary>
+			/// Cloudiness percentage (0-100).
+			/// </summary>
 			[JsonPropertyName("all")]
 			public int Cloudiness { get; set; }
 
+			/// <summary>
+			/// Gets an emoji icon representing the cloud coverage level.
+			/// </summary>
 			public string CloudIcon => Cloudiness switch
 			{
 				< 10 => "☀️",
@@ -110,13 +162,22 @@ namespace Weather
 			public override string ToString() => $"Cloudiness: {Cloudiness}%" + CloudIcon;
 		}
 
+		/// <summary>
+		/// Cloud coverage data for this location.
+		/// </summary>
 		[JsonPropertyName("clouds")]
 		public Clouds CloudData { get; set; } = new();
 
+		/// <summary>
+		/// The timestamp of when the data was calculated (Unix timestamp converted to DateTime).
+		/// </summary>
 		[JsonPropertyName("dt")]
 		[JsonConverter(typeof(UnixDateTimeConverter))]
 		public DateTime DT { get; set; } = new();
 
+		/// <summary>
+		/// Represents system-level data including country code, sunrise, and sunset times.
+		/// </summary>
 		public class Sys
 		{
 			[JsonPropertyName("type")]
@@ -140,18 +201,33 @@ namespace Weather
 				$"Type: {Type}, ID: {Id}, Country: {Country}, Sunrise: {Sunrise}, Sunset: {Sunset}";
 		}
 
+		/// <summary>
+		/// System data including country information and sunrise/sunset times.
+		/// </summary>
 		[JsonPropertyName("sys")]
 		public Sys SysData { get; set; } = new();
 
+		/// <summary>
+		/// Timezone offset from UTC in seconds.
+		/// </summary>
 		[JsonPropertyName("timezone")]
 		public int Timezone { get; set; }
 
+		/// <summary>
+		/// City ID from the API.
+		/// </summary>
 		[JsonPropertyName("id")]
 		public int Id { get; set; }
 
+		/// <summary>
+		/// City name.
+		/// </summary>
 		[JsonPropertyName("name")]
 		public string Name { get; set; } = string.Empty;
 
+		/// <summary>
+		/// Internal response code from the API.
+		/// </summary>
 		[JsonPropertyName("cod")]
 		public int Code { get; set; }
 
@@ -167,18 +243,28 @@ namespace Weather
 			$"{SysData}" + Environment.NewLine +
 			$"Timezone: {Timezone}, ID: {Id}, Code: {Code}";
 
+		/// <summary>
+		/// Returns a shortened version of the weather data showing only temperature, wind speed, and icon.
+		/// </summary>
+		/// <param name="shorthand">Unused parameter retained for method signature compatibility.</param>
+		/// <returns>A brief summary of the weather data.</returns>
 		public string ToString(bool shorthand) =>
 			MainData.Temperature + "°F, " + Environment.NewLine +
 			WindData.Speed + "m/s" + Environment.NewLine +
 			Weathers[0].Icon;
 
+		/// <summary>
+		/// Custom JSON converter for converting Unix timestamps to <see cref="DateTime"/> objects.
+		/// </summary>
 		public class UnixDateTimeConverter : JsonConverter<DateTime>
 		{
+			/// <inheritdoc/>
 			public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 			{
 				return DateTimeOffset.FromUnixTimeSeconds(reader.GetInt64()).DateTime;
 			}
 
+			/// <inheritdoc/>
 			public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
 			{
 				writer.WriteNumberValue(((DateTimeOffset)value).ToUnixTimeSeconds());
@@ -186,8 +272,12 @@ namespace Weather
 
 		}
 
+		/// <summary>
+		/// Custom JSON converter for converting coordinate objects to <see cref="Vector2"/> objects.
+		/// </summary>
 		public class Vector2Converter : JsonConverter<Vector2>
 		{
+			/// <inheritdoc/>
 			public override Vector2 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 			{
 				if (reader.TokenType != JsonTokenType.StartObject)
@@ -221,6 +311,7 @@ namespace Weather
 				throw new JsonException();
 			}
 
+			/// <inheritdoc/>
 			public override void Write(Utf8JsonWriter writer, Vector2 value, JsonSerializerOptions options)
 			{
 				writer.WriteStartObject();

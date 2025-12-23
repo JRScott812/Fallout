@@ -24,13 +24,13 @@ namespace Pip_Boy.Data_Types
 		/// <summary>
 		/// The reputation value.
 		/// <see cref="Vector2.X"/> represents the positive reputation.
-		/// <see cref="Vector2.X"/> represents the negative reputation.
+		/// <see cref="Vector2.Y"/> represents the negative reputation.
 		/// </summary>
 		[DataMember]
 		public Vector2 Reputation = new();
 
 		/// <summary>
-		/// The type of reputation, base on the <see cref="Reputation"/>
+		/// The type of reputation, based on the <see cref="Reputation"/>
 		/// </summary>
 		[DataMember]
 		public Reputations reputation = Reputations.Neutral;

@@ -62,7 +62,7 @@ namespace Pip_Boy.Data_Types
 			/// The location of the <see cref="Quest"/>'s <see cref="Step"/> on the <see cref="Objects.Map"/>
 			/// </summary>
 			[DataMember]
-			public readonly Vector2 PositionX = position;
+			public readonly Vector2 Position = position;
 		}
 
 		/// <returns>The <see cref="Quest"/> and all of the <see cref="Steps"/></returns>
