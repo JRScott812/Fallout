@@ -1,0 +1,11 @@
+<Solution>
+	<Folder Name="/Solution Items/" />
+	<Project Path="Pip-Boy\Pip-Boy.csproj" Type="C#" Id="{4FEC1EAB-516B-4A3F-B864-1A7679D19DF5}" />
+	<Project Path="Terminal Hacking\Terminal Minigame.csproj" Type="C#" Id="{386D96E1-9A31-49DC-BDA5-2FAA5C769484}" />
+	<Project Path="PIP Boy Tests\PIP Boy Tests.csproj" Type="C#" Id="{F78E26C0-4AD6-438C-B0E2-CE1D4033D598}" />
+	<Project Path="Weather\Weather.csproj" Type="C#" Id="{A04936C5-4AF5-4782-8AF2-A7444A4FE1EF}" />
+	<Project Path="Map\Map.csproj" Type="C#" Id="{6D204B72-DE9D-4715-9C94-63DFC4D51203}" />
+	<Properties Name="Visual Studio">
+		<Property Name="OpenWith" Value="Visual Studio Version 17" />
+	</Properties>
+</Solution>
