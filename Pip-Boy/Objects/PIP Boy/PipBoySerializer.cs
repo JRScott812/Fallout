@@ -80,7 +80,7 @@ namespace Pip_Boy.Objects.PIP_Boy
 		/// <exception cref="FileNotFoundException">If the file does not exist.</exception>
 		/// <exception cref="FileLoadException">If the file is not a valid XML file.</exception>
 		/// <exception cref="NullReferenceException">If the <c>*.xml</c> file returns a null object.</exception>
-		public static T FromFile<T>(string filePath)
+		public static T FromFile<T>(string filePath) where T : notnull
 		{
 			if (File.Exists(filePath))
 			{
@@ -100,7 +100,8 @@ namespace Pip_Boy.Objects.PIP_Boy
 					};
 
 					using XmlReader reader = XmlReader.Create(filePath, readerSettings);
-					return (T)serializer.ReadObject(reader) ?? throw new NullReferenceException("Deserialized object is null.");
+					object? result = serializer.ReadObject(reader);
+					return (T)(result ?? throw new NullReferenceException("Deserialized object is null."));
 				}
 				throw new FileLoadException("File is not '*.xml'. ", filePath);
 			}
@@ -164,7 +165,8 @@ namespace Pip_Boy.Objects.PIP_Boy
 		/// Returns the corresponding Type for a given serializable item/entity name.
 		/// </summary>
 		/// <param name="typeName">The name of the type (e.g., "Weapon", "Player", "Ghoul").</param>
-		/// <returns>The Type if found; otherwise, null.</returns>
+		/// <returns>The Type if found; throws exception if not found.</returns>
+		/// <exception cref="SerializationException">If the type is not found.</exception>
 		public static Type GetSerializableTypeByName(string typeName)
 		{
 			// List of serializable base types
@@ -216,11 +218,7 @@ namespace Pip_Boy.Objects.PIP_Boy
 		/// </summary>
 		/// <param name="baseType">The base type to find subclasses of.</param>
 		/// <returns>An enumerable of all non-abstract subclasses of <paramref name="baseType"/>.</returns>
-		public static IEnumerable<Type> GetAllSubtypesOf(Type baseType)
-		{
-			return Assembly.GetAssembly(baseType)
-				.GetTypes()
+		public static IEnumerable<Type> GetAllSubtypesOf(Type baseType) => Assembly.GetAssembly(baseType).GetTypes()
 				.Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(baseType));
-		}
 	}
 }

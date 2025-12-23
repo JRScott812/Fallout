@@ -102,22 +102,34 @@ namespace Pip_Boy.Objects.PIP_Boy
 		public static T EnterValue<T>(string message) where T : IConvertible
 		{
 			Type type = typeof(T);
-			T variable = default;
+			T variable = default!;
 			bool isValid = false;
 			string promptMessage = $"{message} ({type.Name}";
 
 			if (type != typeof(bool) && type != typeof(string))
 			{
-				T minValue = (T)Convert.ChangeType(type.GetField("MinValue").GetValue(null), typeof(T));
-				T maxValue = (T)Convert.ChangeType(type.GetField("MaxValue").GetValue(null), typeof(T));
-				promptMessage += $", Min: {minValue}, Max: {maxValue}";
+				object? minValueObj = type.GetField("MinValue")?.GetValue(null);
+				object? maxValueObj = type.GetField("MaxValue")?.GetValue(null);
+				if (minValueObj != null && maxValueObj != null)
+				{
+					T minValue = (T)Convert.ChangeType(minValueObj, typeof(T));
+					T maxValue = (T)Convert.ChangeType(maxValueObj, typeof(T));
+					promptMessage += $", Min: {minValue}, Max: {maxValue}";
+				}
 			}
 			promptMessage += "): ";
 
 			do
 			{
 				Console.Write(promptMessage);
-				string input = Console.ReadLine();
+				string? input = Console.ReadLine();
+
+				if (string.IsNullOrEmpty(input))
+				{
+					Console.Error.WriteLine("Input cannot be empty.");
+					continue;
+				}
+
 				try
 				{
 					if (type == typeof(bool))
@@ -169,12 +181,14 @@ namespace Pip_Boy.Objects.PIP_Boy
 			{
 				ParameterInfo param = parameters[i];
 				Type paramType = param.ParameterType;
-				object value;
+				object? value;
 
 				// Use EnterValue<T> for primitives and strings, otherwise fallback to recursion for complex types
 				if (paramType.IsPrimitive || paramType == typeof(string) || paramType == typeof(decimal))
 				{
-					MethodInfo enterValueMethod = typeof(PipBoyInput).GetMethod(nameof(EnterValue)).MakeGenericMethod(paramType);
+					MethodInfo? enterValueMethod = typeof(PipBoyInput).GetMethod(nameof(EnterValue))?.MakeGenericMethod(paramType);
+					if (enterValueMethod == null)
+						throw new InvalidOperationException($"Could not find EnterValue method for type {paramType.Name}");
 					value = enterValueMethod.Invoke(null, [$"Enter value for {param.Name}"]);
 				}
 				else if (paramType.IsEnum)
@@ -187,8 +201,8 @@ namespace Pip_Boy.Objects.PIP_Boy
 					while (selected < 0 || selected >= names.Length)
 					{
 						Console.Write("Enter number: ");
-						string input = Console.ReadLine();
-						if (int.TryParse(input, out selected) && selected >= 0 && selected < names.Length)
+						string? input = Console.ReadLine();
+						if (!string.IsNullOrEmpty(input) && int.TryParse(input, out selected) && selected >= 0 && selected < names.Length)
 							break;
 						Console.WriteLine("Invalid selection.");
 					}
@@ -200,10 +214,10 @@ namespace Pip_Boy.Objects.PIP_Boy
 					value = CreateFromInput(paramType);
 				}
 
-				args[i] = value;
+				args[i] = value ?? throw new InvalidOperationException($"Failed to create value for parameter {param.Name}");
 			}
 
-			return ctor.Invoke(args);
+			return ctor.Invoke(args) ?? throw new InvalidOperationException($"Constructor invocation returned null for type {type.FullName}");
 		}
 		#endregion
 	}

@@ -96,7 +96,7 @@ namespace Pip_Boy.Objects.PIP_Boy
 		/// <summary>
 		/// The path of the player's <c>*.xml</c> file.
 		/// </summary>
-		public string PlayerFilePath { get; private set; }
+		public string? PlayerFilePath { get; private set; }
 
 		#region Constructors
 		/// <param name="workingDirectory">The directory to load items, sounds, songs, and player info from</param>
@@ -252,8 +252,20 @@ namespace Pip_Boy.Objects.PIP_Boy
 					#region Object Creation (for testing)
 					case ConsoleKey.L:
 						Console.Write("Enter the type of object to create (e.g., Weapon, Player, Ghoul): ");
-						string enteredType = Console.ReadLine();
-						Type type = PipBoySerializer.GetSerializableTypeByName(enteredType);
+						string? enteredType = Console.ReadLine();
+						if (string.IsNullOrEmpty(enteredType))
+						{
+							_ui.Error("No type entered!");
+							break;
+						}
+
+						Type? type = PipBoySerializer.GetSerializableTypeByName(enteredType);
+						if (type == null)
+						{
+							_ui.Error($"Type '{enteredType}' not found!");
+							break;
+						}
+
 						object createdObject = PipBoyInput.CreateFromInput(type);
 						string filePath = PipBoySerializer.ToFile(Directory.GetCurrentDirectory(), createdObject);
 						Console.WriteLine($"Created object of type {type.Name} and saved to file: {filePath}");

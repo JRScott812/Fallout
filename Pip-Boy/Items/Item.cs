@@ -34,7 +34,7 @@ namespace Pip_Boy.Items
 		/// An emoji or icon representation of the <see cref="Item"/>.
 		/// </summary>
 		[DataMember]
-		public string Icon;
+		public string Icon = string.Empty;
 		#endregion
 
 		#region Constructors
@@ -61,12 +61,6 @@ namespace Pip_Boy.Items
 			Weight = 0;
 			Value = 0;
 		}
-		#endregion
-
-		#region Method(s)
-		#endregion
-
-		#region Enum(s)
 		#endregion
 
 		#region Override Functions
