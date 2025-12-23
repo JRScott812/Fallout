@@ -14,8 +14,8 @@ public class PlayerTests
 	[ClassInitialize]
 	public static void ClassInitialize(TestContext context)
 	{
-		string testRunDir = context.TestRunDirectory ?? Directory.GetCurrentDirectory();
-		serializedPlayerFileFolder = Path.Combine(testRunDir, "Serialized Files", "Player") + Path.DirectorySeparatorChar;
+		string projectDir = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
+		serializedPlayerFileFolder = Path.Combine(projectDir, "Serialized Files", "Player") + Path.DirectorySeparatorChar;
 		Directory.CreateDirectory(serializedPlayerFileFolder);
 		serializedFilePath = PipBoy.ToFile(serializedPlayerFileFolder, player);
 	}

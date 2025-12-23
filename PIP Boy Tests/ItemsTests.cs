@@ -23,8 +23,8 @@ namespace PIP_Boy_Tests
 		[ClassInitialize]
 		public static void ClassInitialize(TestContext context)
 		{
-			string testRunDir = context.TestRunDirectory ?? Directory.GetCurrentDirectory();
-			serializedItemsFilesFolder = Path.Combine(testRunDir, "Serialized Files", "Items") + Path.DirectorySeparatorChar;
+			string projectDir = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
+			serializedItemsFilesFolder = Path.Combine(projectDir, "Serialized Files", "Items") + Path.DirectorySeparatorChar;
 			Directory.CreateDirectory(serializedItemsFilesFolder);
 
 			serializedItemFilePaths = new string[Items.Length];

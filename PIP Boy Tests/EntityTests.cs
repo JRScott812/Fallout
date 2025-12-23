@@ -37,8 +37,8 @@ public class EntityTests
 	[ClassInitialize]
 	public static void ClassInitialize(TestContext context)
 	{
-		string testRunDir = context.TestRunDirectory ?? Directory.GetCurrentDirectory();
-		serializedEntitiesFilesFolder = Path.Combine(testRunDir, "Serialized Files", "Entities") + Path.DirectorySeparatorChar;
+		string projectDir = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
+		serializedEntitiesFilesFolder = Path.Combine(projectDir, "Serialized Files", "Entities") + Path.DirectorySeparatorChar;
 		Directory.CreateDirectory(serializedEntitiesFilesFolder);
 
 		serializedEntityFilePaths = new string[Entities.Length];
