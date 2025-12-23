@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pip_Boy.Objects.PIP_Boy;
+using System;
 using System.IO;
 using System.Media;
 using System.Text;
@@ -46,7 +47,7 @@ namespace Pip_Boy.Objects
 		/// <param name="pipBoy">Used for error handling</param>
 		public void AddSong(PipBoy pipBoy)
 		{
-			string? path = PipBoy.EnterValue<string>("Enter path to '.wav' file");
+			string? path = PipBoyInput.EnterValue<string>("Enter path to '.wav' file");
 
 			if (path is not null && Path.GetExtension(path) == ".wav")
 			{

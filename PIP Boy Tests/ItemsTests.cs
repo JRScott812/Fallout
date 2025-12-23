@@ -1,5 +1,5 @@
 using Pip_Boy.Items;
-using Pip_Boy.Objects;
+using Pip_Boy.Objects.PIP_Boy;
 
 namespace PIP_Boy_Tests
 {
@@ -31,7 +31,7 @@ namespace PIP_Boy_Tests
 
 			for (int i = 0; i < Items.Length; i++)
 			{
-				serializedItemFilePaths[i] = PipBoy.ToFile(serializedItemsFilesFolder, Items[i]);
+				serializedItemFilePaths[i] = PipBoySerializer.ToFile(serializedItemsFilesFolder, Items[i]);
 			}
 		}
 
@@ -54,7 +54,7 @@ namespace PIP_Boy_Tests
 			for (int i = 0; i < serializedItemFiles.Length; i++)
 			{
 				string filePath = serializedItemFiles[i];
-				Type type = PipBoy.GetTypeFromXML(filePath);
+				Type type = PipBoySerializer.GetTypeFromXML(filePath);
 				actualTypes[i] = type;
 			}
 
@@ -69,15 +69,15 @@ namespace PIP_Boy_Tests
 				string expectedFileName = Path.Combine(serializedItemsFilesFolder, item.Name + ".xml");
 				Assert.IsTrue(File.Exists(expectedFileName), $"Expected file not found: {expectedFileName}");
 
-				Type type = PipBoy.GetTypeFromXML(expectedFileName);
+				Type type = PipBoySerializer.GetTypeFromXML(expectedFileName);
 				Item? deserialized = type.Name switch
 				{
-					nameof(Weapon) => PipBoy.FromFile<Weapon>(expectedFileName),
-					nameof(TorsoPiece) => PipBoy.FromFile<TorsoPiece>(expectedFileName),
-					nameof(HeadPiece) => PipBoy.FromFile<HeadPiece>(expectedFileName),
-					nameof(Ammo) => PipBoy.FromFile<Ammo>(expectedFileName),
-					nameof(Aid) => PipBoy.FromFile<Aid>(expectedFileName),
-					nameof(Misc) => PipBoy.FromFile<Misc>(expectedFileName),
+					nameof(Weapon) => PipBoySerializer.FromFile<Weapon>(expectedFileName),
+					nameof(TorsoPiece) => PipBoySerializer.FromFile<TorsoPiece>(expectedFileName),
+					nameof(HeadPiece) => PipBoySerializer.FromFile<HeadPiece>(expectedFileName),
+					nameof(Ammo) => PipBoySerializer.FromFile<Ammo>(expectedFileName),
+					nameof(Aid) => PipBoySerializer.FromFile<Aid>(expectedFileName),
+					nameof(Misc) => PipBoySerializer.FromFile<Misc>(expectedFileName),
 					_ => throw new InvalidOperationException($"Unknown type: {type.Name}")
 				};
 

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Pip_Boy.Objects.PipBoy">
+    <Position X="2.5" Y="0.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Pip_Boy.Objects.PipBoy.Pages" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Objects\PIP Boy\PipBoy.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Pip_Boy.Objects.PipBoy.StatsPages" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Objects\PIP Boy\PipBoy.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Pip_Boy.Objects.PipBoy.DataPages" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Objects\PIP Boy\PipBoy.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAIhIgAQAAAAAygQAAAgAAACRAAAAAAwIAQBA=</HashCode>
+      <FileName>Objects\PIP Boy\PipBoy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pip_Boy.Objects.PipBoyAudio">
+    <Position X="4.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACBAgIAIAAAIIAAAAAAAoIIAAAAAhIDAAAAAAAAAA=</HashCode>
+      <FileName>Objects\PIP Boy\PipBoyAudio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pip_Boy.Objects.PipBoyInput">
+    <Position X="7.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAIAAAABAAAAAAAAACAIEACA=</HashCode>
+      <FileName>Objects\PIP Boy\PipBoyInput.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pip_Boy.Objects.PipBoySerializer">
+    <Position X="9.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAABAAEAEAAACAAAAAAA=</HashCode>
+      <FileName>Objects\PIP Boy\PipBoySerializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pip_Boy.Objects.PipBoyUI">
+    <Position X="6" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAgAAIAAAAQAAAAAAQAAAAABIAEAAAAgAwACBAAA=</HashCode>
+      <FileName>Objects\PIP Boy\PipBoyUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="8.83" />
+</ClassDiagram>

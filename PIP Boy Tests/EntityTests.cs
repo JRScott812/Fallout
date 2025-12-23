@@ -2,7 +2,7 @@ using Pip_Boy.Entities;
 using Pip_Boy.Entities.Creatures;
 using Pip_Boy.Entities.Mutants;
 using Pip_Boy.Entities.Robots;
-using Pip_Boy.Objects;
+using Pip_Boy.Objects.PIP_Boy;
 
 namespace PIP_Boy_Tests;
 
@@ -45,7 +45,7 @@ public class EntityTests
 
 		for (int i = 0; i < Entities.Length; i++)
 		{
-			serializedEntityFilePaths[i] = PipBoy.ToFile(serializedEntitiesFilesFolder, Entities[i]);
+			serializedEntityFilePaths[i] = PipBoySerializer.ToFile(serializedEntitiesFilesFolder, Entities[i]);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class EntityTests
 			Entity? entity = Entities.FirstOrDefault(e => e.GetType().Name == fileName);
 
 			Assert.IsNotNull(entity, $"Could not find entity for file: {fileName}");
-			Assert.AreEqual(entity.GetType(), PipBoy.GetTypeFromXML(filePath));
+			Assert.AreEqual(entity.GetType(), PipBoySerializer.GetTypeFromXML(filePath));
 		}
 	}
 
@@ -68,7 +68,7 @@ public class EntityTests
 	{
 		foreach (string filePath in serializedEntityFiles)
 		{
-			Type type = PipBoy.GetTypeFromXML(filePath);
+			Type type = PipBoySerializer.GetTypeFromXML(filePath);
 			Entity? deserialized = (Entity?)Activator.CreateInstance(type);
 			Assert.IsNotNull(deserialized);
 			Assert.AreEqual(type, deserialized.GetType());

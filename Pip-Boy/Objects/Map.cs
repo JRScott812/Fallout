@@ -1,5 +1,6 @@
 ﻿using Pip_Boy.Data_Types;
 using Pip_Boy.Entities;
+using Pip_Boy.Objects.PIP_Boy;
 using System;
 using System.IO;
 using System.Numerics;
@@ -71,7 +72,7 @@ namespace Pip_Boy.Objects
 			for (int i = 0; i < filePaths.Length; i++)
 			{
 				string filePath = filePaths[i];
-				tempLocations[i] = PipBoy.FromFile<Location>(filePath);
+				tempLocations[i] = PipBoySerializer.FromFile<Location>(filePath);
 			}
 			return tempLocations;
 		}

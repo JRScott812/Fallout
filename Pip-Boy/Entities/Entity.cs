@@ -1,6 +1,7 @@
 ﻿using Pip_Boy.Data_Types;
 using Pip_Boy.Items;
 using Pip_Boy.Objects;
+using Pip_Boy.Objects.PIP_Boy;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -323,7 +324,7 @@ namespace Pip_Boy.Entities
 		}
 
 		/// <returns>The limbs and their percentages</returns>
-		public virtual string ShowLimbs() => PipBoy.DisplayCollection(nameof(Limbs), Limbs);
+		public virtual string ShowLimbs() => PipBoyUI.DisplayCollection(nameof(Limbs), Limbs);
 
 		/// <summary>
 		/// Show 1-line preview of the <see cref="Entity"/>

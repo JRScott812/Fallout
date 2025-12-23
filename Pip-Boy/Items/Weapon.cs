@@ -1,5 +1,5 @@
 ﻿using Pip_Boy.Data_Types;
-using Pip_Boy.Objects;
+using Pip_Boy.Objects.PIP_Boy;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -123,7 +123,7 @@ namespace Pip_Boy.Items
 
 		#region Override Functions
 		/// <returns><see cref="Equipable.ToString()"/> is there are no <see cref="Modifications"/>.  If there are, then add them to the string.</returns>
-		public override string ToString() => Modifications.Count == 0 ? base.ToString() : PipBoy.DisplayCollection(nameof(Modifications), Modifications);
+		public override string ToString() => Modifications.Count == 0 ? base.ToString() : PipBoyUI.DisplayCollection(nameof(Modifications), Modifications);
 		#endregion
 	}
 }

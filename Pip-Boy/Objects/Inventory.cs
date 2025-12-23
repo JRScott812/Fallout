@@ -1,5 +1,6 @@
 ﻿using Pip_Boy.Entities;
 using Pip_Boy.Items;
+using Pip_Boy.Objects.PIP_Boy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -158,22 +159,22 @@ namespace Pip_Boy.Objects
 						switch (expectedSubDirectory)
 						{
 							case "Weapon":
-								Weapons.Add(PipBoy.FromFile<Weapon>(filePath));
+								Weapons.Add(PipBoySerializer.FromFile<Weapon>(filePath));
 								break;
 							case "Apparel":
-								if (PipBoy.GetTypeFromXML(filePath) == typeof(HeadPiece))
-									Apparels.Add(PipBoy.FromFile<HeadPiece>(filePath));
-								else if (PipBoy.GetTypeFromXML(filePath) == typeof(TorsoPiece))
-									Apparels.Add(PipBoy.FromFile<TorsoPiece>(filePath));
+								if (PipBoySerializer.GetTypeFromXML(filePath) == typeof(HeadPiece))
+									Apparels.Add(PipBoySerializer.FromFile<HeadPiece>(filePath));
+								else if (PipBoySerializer.GetTypeFromXML(filePath) == typeof(TorsoPiece))
+									Apparels.Add(PipBoySerializer.FromFile<TorsoPiece>(filePath));
 								break;
 							case "Aid":
-								Aids.Add(PipBoy.FromFile<Aid>(filePath));
+								Aids.Add(PipBoySerializer.FromFile<Aid>(filePath));
 								break;
 							case "Misc":
-								Miscs.Add(PipBoy.FromFile<Misc>(filePath));
+								Miscs.Add(PipBoySerializer.FromFile<Misc>(filePath));
 								break;
 							case "Ammo":
-								Ammos.Add(PipBoy.FromFile<Ammo>(filePath));
+								Ammos.Add(PipBoySerializer.FromFile<Ammo>(filePath));
 								break;
 						}
 					}
@@ -193,11 +194,11 @@ namespace Pip_Boy.Objects
 		/// </summary>
 		public void Save()
 		{
-			Weapons.ForEach(x => PipBoy.ToFile(WeaponFolderPath, x));
-			Apparels.ForEach(x => PipBoy.ToFile(ApparelFolderPath, x));
-			Aids.ForEach(x => PipBoy.ToFile(AidFolderPath, x));
-			Apparels.ForEach(x => PipBoy.ToFile(ApparelFolderPath, x));
-			Ammos.ForEach(x => PipBoy.ToFile(AmmoFolderPath, x));
+			Weapons.ForEach(x => PipBoySerializer.ToFile(WeaponFolderPath, x));
+			Apparels.ForEach(x => PipBoySerializer.ToFile(ApparelFolderPath, x));
+			Aids.ForEach(x => PipBoySerializer.ToFile(AidFolderPath, x));
+			Apparels.ForEach(x => PipBoySerializer.ToFile(ApparelFolderPath, x));
+			Ammos.ForEach(x => PipBoySerializer.ToFile(AmmoFolderPath, x));
 		}
 
 		#region Inventory Management

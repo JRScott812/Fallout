@@ -1,6 +1,6 @@
 ﻿using Pip_Boy.Data_Types;
 using Pip_Boy.Entities;
-using Pip_Boy.Objects;
+using Pip_Boy.Objects.PIP_Boy;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -97,7 +97,7 @@ namespace Pip_Boy.Items
 		public override string ToString() =>
 			(IsEquipped ? '*' : 'O')
 			+ base.ToString()
-			+ ((Effects is null || Effects.Count == 0) ? string.Empty : Environment.NewLine + PipBoy.DisplayCollection(nameof(Effects), Effects) + Environment.NewLine)
+			+ ((Effects is null || Effects.Count == 0) ? string.Empty : Environment.NewLine + PipBoyUI.DisplayCollection(nameof(Effects), Effects) + Environment.NewLine)
 			+ "\t\tCND: " + string.Format(Condition.ToString(), "0.00");
 		#endregion
 	}

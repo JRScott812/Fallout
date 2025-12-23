@@ -1,5 +1,6 @@
 ﻿using Pip_Boy.Data_Types;
 using Pip_Boy.Objects;
+using Pip_Boy.Objects.PIP_Boy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -124,7 +125,7 @@ namespace Pip_Boy.Entities
 		{
 			foreach (Perk perk in Perks)
 			{
-				PipBoy.ToFile(perksDirectory, perk);
+				PipBoySerializer.ToFile(perksDirectory, perk);
 			}
 		}
 
@@ -136,7 +137,7 @@ namespace Pip_Boy.Entities
 			string[] filePaths = Directory.GetFiles(perksDirectory, "*.xml");
 			foreach (string filePath in filePaths)
 			{
-				Perks.Add(PipBoy.FromFile<Perk>(filePath));
+				Perks.Add(PipBoySerializer.FromFile<Perk>(filePath));
 			}
 		}
 
@@ -163,7 +164,7 @@ namespace Pip_Boy.Entities
 			string? tempName = null;
 			while (tempName is null)
 			{
-				tempName = PipBoy.EnterValue<string>("Enter Player Name");
+				tempName = PipBoyInput.EnterValue<string>("Enter Player Name");
 				Console.Clear();
 			}
 
