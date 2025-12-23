@@ -57,7 +57,7 @@ public class EntityTests
 			// Find the corresponding entity by matching the filename
 			string fileName = Path.GetFileNameWithoutExtension(filePath);
 			Entity? entity = Entities.FirstOrDefault(e => e.GetType().Name == fileName);
-			
+
 			Assert.IsNotNull(entity, $"Could not find entity for file: {fileName}");
 			Assert.AreEqual(entity.GetType(), PipBoy.GetTypeFromXML(filePath));
 		}

@@ -1,8 +1,6 @@
 ﻿using Pip_Boy.Data_Types;
 using Pip_Boy.Objects;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Pip_Boy.Items
