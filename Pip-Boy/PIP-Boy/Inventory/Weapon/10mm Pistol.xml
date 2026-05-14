@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/css" href="..\Inventory Styling.css"?>
-<Weapon xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Pip_Boy.Items">
+<Weapon xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Items">
 	<Icon>🔫</Icon>
 	<Name>10mm Pistol</Name>
 	<Value>55</Value>
 	<Weight>5.5</Weight>
 	<Condition>1</Condition>
-	<Effects xmlns:d2p1="http://schemas.datacontract.org/2004/07/Pip_Boy.Data_Types" i:nil="true" />
+	<Effects xmlns:d2p1="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Data_Types" />
 	<IsEquipped>false</IsEquipped>
-	<originalValue>0</originalValue>
+	<originalValue>55</originalValue>
 	<Modifications xmlns:d2p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
 	<RateOfFire>100</RateOfFire>
-	<SkillRequirement>20</SkillRequirement>
+	<SkillRequirement>30</SkillRequirement>
 	<StrengthRequirement>3</StrengthRequirement>
 	<TypeOfWeapon>Gun</TypeOfWeapon>
-	<originalDamage>0</originalDamage>
+	<originalDamage>10</originalDamage>
 </Weapon>

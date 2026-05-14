@@ -139,7 +139,7 @@ namespace Terminal_Minigame
 					case ConsoleKey.Enter:
 						Console.WriteLine($"Invalid {Compare(selectedSequence, correctWord)}/{correctWord.Length} match.");
 						break;
-						#endregion
+					#endregion
 				}
 				Console.Clear();
 			}
@@ -273,7 +273,7 @@ namespace Terminal_Minigame
 		{
 			for (int i = start; i < end; i++)
 			{
-				if (buffer[i] < 32 || buffer[i] > 126) // non-printable character
+				if (buffer[i] is < 32 or > 126) // non-printable character
 				{
 					Console.Write('.');
 				}

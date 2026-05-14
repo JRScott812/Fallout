@@ -23,7 +23,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Windows.Extensions" Version="10.0.1" />
+		<PackageReference Include="System.Windows.Extensions" Version="10.0.8" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Pip-Boy Classes\Pip-Boy Classes.csproj" />
 	</ItemGroup>
 
 	<Target Name="CopyPipBoyFolder" AfterTargets="Build">

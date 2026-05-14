@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="..\Inventory Styling.css"?>
+<Player xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Entities">
+	<ActionPoints>8</ActionPoints>
+	<CurrentHealth>136</CurrentHealth>
+	<DamageResistance>0</DamageResistance>
+	<Effects xmlns:d2p1="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Data_Types" />
+	<Gender i:nil="true" />
+	<Icon>🕹️</Icon>
+	<Inventory xmlns:d2p1="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Objects">
+		<d2p1:itemPage>Weapons</d2p1:itemPage>
+	</Inventory>
+	<Level>1</Level>
+	<Limbs xmlns:d2p1="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Data_Types">
+		<d2p1:Limb>
+			<d2p1:Condition>1</d2p1:Condition>
+			<d2p1:CrippledEffects />
+			<d2p1:Icon>😐</d2p1:Icon>
+			<d2p1:Name>Head</d2p1:Name>
+		</d2p1:Limb>
+		<d2p1:Limb>
+			<d2p1:Condition>1</d2p1:Condition>
+			<d2p1:CrippledEffects />
+			<d2p1:Icon>💪</d2p1:Icon>
+			<d2p1:Name>Left Arm</d2p1:Name>
+		</d2p1:Limb>
+		<d2p1:Limb>
+			<d2p1:Condition>1</d2p1:Condition>
+			<d2p1:CrippledEffects />
+			<d2p1:Icon>👕</d2p1:Icon>
+			<d2p1:Name>Torso</d2p1:Name>
+		</d2p1:Limb>
+		<d2p1:Limb>
+			<d2p1:Condition>1</d2p1:Condition>
+			<d2p1:CrippledEffects />
+			<d2p1:Icon>💪</d2p1:Icon>
+			<d2p1:Name>Right Arm</d2p1:Name>
+		</d2p1:Limb>
+		<d2p1:Limb>
+			<d2p1:Condition>1</d2p1:Condition>
+			<d2p1:CrippledEffects />
+			<d2p1:Icon>🦵</d2p1:Icon>
+			<d2p1:Name>Left Leg</d2p1:Name>
+		</d2p1:Limb>
+		<d2p1:Limb>
+			<d2p1:Condition>1</d2p1:Condition>
+			<d2p1:CrippledEffects />
+			<d2p1:Icon>🦵</d2p1:Icon>
+			<d2p1:Name>Right Leg</d2p1:Name>
+		</d2p1:Limb>
+	</Limbs>
+	<Location xmlns:d2p1="http://schemas.datacontract.org/2004/07/System.Numerics">
+		<d2p1:X>0</d2p1:X>
+		<d2p1:Y>0</d2p1:Y>
+	</Location>
+	<MaxActionPoints>8</MaxActionPoints>
+	<MaxHealth>136</MaxHealth>
+	<Name>Jake</Name>
+	<SPECIAL xmlns:d2p1="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Data_Types">
+		<d2p1:Attribute>
+			<d2p1:Icon>💪</d2p1:Icon>
+			<d2p1:Name>Strength</d2p1:Name>
+			<d2p1:Value>4</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>👁️</d2p1:Icon>
+			<d2p1:Name>Perception</d2p1:Name>
+			<d2p1:Value>4</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>🏋️</d2p1:Icon>
+			<d2p1:Name>Endurance</d2p1:Name>
+			<d2p1:Value>4</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>🗣️</d2p1:Icon>
+			<d2p1:Name>Charisma</d2p1:Name>
+			<d2p1:Value>4</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>🧠</d2p1:Icon>
+			<d2p1:Name>Intelligence</d2p1:Name>
+			<d2p1:Value>4</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>🤸</d2p1:Icon>
+			<d2p1:Name>Agility</d2p1:Name>
+			<d2p1:Value>4</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>🍀</d2p1:Icon>
+			<d2p1:Name>Luck</d2p1:Name>
+			<d2p1:Value>4</d2p1:Value>
+		</d2p1:Attribute>
+	</SPECIAL>
+	<Skills xmlns:d2p1="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Data_Types">
+		<d2p1:Attribute>
+			<d2p1:Icon>🤑</d2p1:Icon>
+			<d2p1:Name>Barter</d2p1:Name>
+			<d2p1:Value>72</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>⚡</d2p1:Icon>
+			<d2p1:Name>EnergyWeapons</d2p1:Name>
+			<d2p1:Value>70</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>💥</d2p1:Icon>
+			<d2p1:Name>Explosives</d2p1:Name>
+			<d2p1:Value>57</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>🔫</d2p1:Icon>
+			<d2p1:Name>Gun</d2p1:Name>
+			<d2p1:Value>37</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>🔒</d2p1:Icon>
+			<d2p1:Name>Lockpick</d2p1:Name>
+			<d2p1:Value>98</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>⚕️</d2p1:Icon>
+			<d2p1:Name>Medicine</d2p1:Name>
+			<d2p1:Value>55</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>🔪</d2p1:Icon>
+			<d2p1:Name>MeleeWeapons</d2p1:Name>
+			<d2p1:Value>54</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>🔧</d2p1:Icon>
+			<d2p1:Name>Repair</d2p1:Name>
+			<d2p1:Value>99</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>🧪</d2p1:Icon>
+			<d2p1:Name>Science</d2p1:Name>
+			<d2p1:Value>23</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>🥷</d2p1:Icon>
+			<d2p1:Name>Sneak</d2p1:Name>
+			<d2p1:Value>22</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>💬</d2p1:Icon>
+			<d2p1:Name>Speech</d2p1:Name>
+			<d2p1:Value>75</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>⛺</d2p1:Icon>
+			<d2p1:Name>Survival</d2p1:Name>
+			<d2p1:Value>89</d2p1:Value>
+		</d2p1:Attribute>
+		<d2p1:Attribute>
+			<d2p1:Icon>👊</d2p1:Icon>
+			<d2p1:Name>Unarmed</d2p1:Name>
+			<d2p1:Value>74</d2p1:Value>
+		</d2p1:Attribute>
+	</Skills>
+	<Caps>0</Caps>
+	<Perks xmlns:d2p1="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Data_Types" />
+	<RadiationResistance>0</RadiationResistance>
+	<Rads>0</Rads>
+	<activeDirectory>F:\source\Pip-Boy\Pip-Boy\PIP-Boy</activeDirectory>
+	<inventoryDirectory>F:\source\Pip-Boy\Pip-Boy\PIP-Boy\Inventory\</inventoryDirectory>
+	<perksDirectory>F:\source\Pip-Boy\Pip-Boy\PIP-Boy\Perks\</perksDirectory>
+</Player>

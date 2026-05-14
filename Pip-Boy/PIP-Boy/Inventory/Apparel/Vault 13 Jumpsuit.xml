@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/css" href="..\Inventory Styling.css"?>
-<TorsoPiece xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Pip_Boy.Items">
+<TorsoPiece xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Items">
 	<Icon>👕</Icon>
 	<Name>Vault 13 Jumpsuit</Name>
 	<Value>25</Value>
 	<Weight>5</Weight>
 	<Condition>1</Condition>
-	<Effects xmlns:d2p1="http://schemas.datacontract.org/2004/07/Pip_Boy.Data_Types" i:nil="true" />
+	<Effects xmlns:d2p1="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Data_Types" />
 	<IsEquipped>false</IsEquipped>
-	<originalValue>0</originalValue>
+	<originalValue>25</originalValue>
+	<DamageThreshold>3</DamageThreshold>
 	<RequiresPowerArmorTraining>false</RequiresPowerArmorTraining>
-	<originalDamageThreshold>0</originalDamageThreshold>
 	<pieceType>Nothing</pieceType>
 </TorsoPiece>

@@ -1,3 +1,2 @@
 ﻿# Ignore large *.wav files for songs
 PIP-Boy/Songs/*.wav
-!PIP-Boy/Songs/.gitkeep

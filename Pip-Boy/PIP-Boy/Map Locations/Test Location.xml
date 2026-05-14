@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/css" href="..\Inventory Styling.css"?>
-<Location xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Pip_Boy.Data_Types">
+<Location xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Pip_Boy_Classes.Data_Types">
 	<Description>A test location</Description>
 	<Icon>🏠</Icon>
 	<Name>Test Location</Name>

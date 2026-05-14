@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Pip_Boy_Classes.Objects.Inventory">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Pip_Boy_Classes.Objects.Inventory.ItemsPages">
+        <TypeIdentifier>
+          <NewMemberFileName>Objects\Inventory.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gAIAAMBAABAQgAAkAIAwAACACAQgAAAAAgAIAABQABE=</HashCode>
+      <FileName>Objects\Inventory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pip_Boy_Classes.Objects.Map">
+    <Position X="9.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAKAAEAAIAAAAAIAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Objects\Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pip_Boy_Classes.Objects.Radio">
+    <Position X="7.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAIAAAAAQEAAAAAAAECAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Radio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pip_Boy_Classes.Objects.PipBoySerializer">
+    <Position X="11" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAABAAEAEAAACAAAAAAA=</HashCode>
+      <FileName>Objects\PipBoySerializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

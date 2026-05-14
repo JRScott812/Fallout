@@ -1,5 +1,7 @@
-using Pip_Boy.Entities;
-using Pip_Boy.Objects.PIP_Boy;
+using Pip_Boy_Classes.Entities;
+using Pip_Boy_Classes.Objects;
+using System;
+using System.IO;
 
 namespace PIP_Boy_Tests;
 
@@ -23,7 +25,7 @@ public class PlayerTests
 	[TestMethod]
 	public void PlayerSerialization()
 	{
-		Assert.IsTrue(Directory.EnumerateFiles(serializedPlayerFileFolder).Contains(serializedFilePath));
+		Assert.Contains(serializedFilePath, Directory.EnumerateFiles(serializedPlayerFileFolder));
 		Assert.AreEqual(player.GetType(), PipBoySerializer.GetTypeFromXML(serializedFilePath), "Deserialized type does not match expected Player type.");
 	}
 

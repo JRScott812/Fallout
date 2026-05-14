@@ -1,154 +1,85 @@
-﻿/* Fallout-themed CSS */
+﻿/* Fallout-themed XML preview styling */
 body {
-    font-family: 'Courier New';
-    background-color: #000;
-    margin: 10px;
-    padding: 20px;
+	font-family: 'Courier New', monospace;
+	background-color: #000;
+	color: #34bd32;
+	margin: 10px;
+	padding: 20px;
 }
 
-Name, Weight, Value, Condition, IsEquipped, Effects, Damage, RateOfFire, DPS, DamageThreshold, RequiresPowerArmorTraining, originalValue, StrengthRequirement, SkillRequirement, TypeOfWeapon, originalDamageThreshold, TypeOfAmmo, AmmoModification, TypeOfAid {
-    display: block; /* Ensure each variable is on a new line */
-    margin-bottom: 10px;
-    color: #34bd32;
-    font-weight: bold;
-    text-shadow: 0 0 5px #00FF00;
+Weapon, Ammo, Aid, Misc, HeadPiece, TorsoPiece {
+	display: block;
+	border: 1px solid #00FF00;
+	padding: 12px;
+	margin-bottom: 16px;
+	background-color: #001400;
 }
 
-/* Before */
-Name::before {
-    content: "Name: ";
+Weapon > *, Ammo > *, Aid > *, Misc > *, HeadPiece > *, TorsoPiece > * {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: bold;
+	text-shadow: 0 0 5px #00FF00;
 }
 
-Icon:before {
-    content: "Icon: ";
-}
+Name::before { content: "Name: "; }
+Icon::before { content: "Icon: "; }
+Weight::before { content: "Weight: "; }
+Value::before { content: "Value: "; }
+Condition::before { content: "Condition: "; }
+IsEquipped::before { content: "Is Equipped?: "; }
+Effects::before { content: "Effects: "; }
+Damage::before { content: "Damage: "; }
+RateOfFire::before { content: "Rate of Fire: "; }
+DPS::before { content: "DPS: "; }
+DamageThreshold::before { content: "Damage Threshold: "; }
+RequiresPowerArmorTraining::before { content: "Requires Power Armor Training?: "; }
+originalValue::before { content: "Original Value: "; }
+StrengthRequirement::before { content: "Strength Requirement: "; }
+SkillRequirement::before { content: "Skill Requirement: "; }
+TypeOfWeapon::before { content: "Weapon Type: "; }
+originalDamage::before { content: "Original Damage: "; }
+pieceType::before { content: "Armor Piece Type: "; }
+TypeOfAmmo::before { content: "Ammo Type: "; }
+Modification::before { content: "Ammo Modification: "; }
+TypeOfAid::before { content: "Aid Type: "; }
+miscType::before { content: "Misc Type: "; }
 
-Weight::before {
-    content: "Weight: ";
-}
-
-Value::before {
-    content: "Value: ";
-}
-
-originalValue::before {
-    content: "Original Value: "
-}
-
-Condition::before {
-    content: "Condition: ";
-}
-
-IsEquipped::before {
-    content: "Is Equipped?: ";
-}
-
-Effects::before {
-    content: "Effects: ";
-}
-
-Damage::before {
-    content: "Damage: ";
-}
-
-RateOfFire::before {
-    content: "Rate of Fire: ";
-}
-
-DPS::before {
-    content: "DPS: ";
-}
-
-DamageThreshold::before {
-    content: "Damage Threshold: "
-}
-
-RequiresPowerArmorTraining::before {
-    content: "Requires Power Armor Training?: "
-}
-
-StrengthRequirement::before {
-    content: "Strength Requirement: "
-}
-
-SkillRequirement::before {
-    content: "Skill Requirement: "
-}
-
-TypeOfWeapon::before {
-    content: "Weapon Type: "
-}
-
-originalDamageThreshold::before {
-    content: "Original Damage Threshold: "
-}
-
-TypeOfAmmo::before {
-    content: "Ammo Type: "
-}
-
-AmmoModification::before {
-    content: "Ammo Modification: "
-}
-
-TypeOfAid::before {
-    content: "Aid Type: "
-}
-
-/* Table styling for Effects */
-Effects {
-    display: table;
-    width: 100%;
-    border-collapse: collapse;
-}
-
-    Effects > Header {
-        display: table-header-group;
-        font-weight: bold;
-        background-color: #002200;
-    }
-
-        Effects > Header > * {
-            display: table-cell;
-            border: 1px solid #00FF00;
-            padding: 5px;
-        }
-
-    Effects > Effect {
-        display: table-row;
-    }
-
-        Effects > Effect > * {
-            display: table-cell;
-            border: 1px solid #00FF00;
-            padding: 5px;
-        }
-
-/* Table styling for Modifications */
+Effects,
 Modifications {
-    display: table;
-    width: 100%;
-    border-collapse: collapse;
+	display: table;
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 8px;
 }
 
-    Modifications > Header {
-        display: table-header-group;
-        font-weight: bold;
-        background-color: #002200;
-    }
+Effects > Header,
+Modifications > Header {
+	display: table-header-group;
+	font-weight: bold;
+	background-color: #002200;
+}
 
-        Modifications > Header > * {
-            display: table-cell;
-            border: 1px solid #00FF00;
-            padding: 5px;
-        }
+Effects > Header > *,
+Modifications > Header > *,
+Effects > Effect > *,
+Modifications > Modification > * {
+	display: table-cell;
+	border: 1px solid #00FF00;
+	padding: 5px;
+}
 
-    Modifications > Modification {
-        display: table-row;
-    }
+Effects > Effect,
+Modifications > Modification {
+	display: table-row;
+}
 
-        Modifications > Modification > * {
-            display: table-cell;
-            border: 1px solid #00FF00;
-            padding: 5px;
-        }
+/* Keep empty collections visible in browser previews */
+Effects:empty::after,
+Modifications:empty::after {
+	content: "(none)";
+	display: block;
+	color: #6cff6c;
+	font-style: italic;
+	padding: 4px 0;
+}

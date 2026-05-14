@@ -1,5 +1,7 @@
-using Pip_Boy.Items;
-using Pip_Boy.Objects.PIP_Boy;
+using Pip_Boy_Classes.Items;
+using Pip_Boy_Classes.Objects;
+using System;
+using System.IO;
 
 namespace PIP_Boy_Tests
 {
@@ -64,7 +66,7 @@ namespace PIP_Boy_Tests
 			}
 
 			// Deserialize each file and compare to Items array by matching file name to item.Name
-			foreach (var item in Items)
+			foreach (Item item in Items)
 			{
 				string expectedFileName = Path.Combine(serializedItemsFilesFolder, item.Name + ".xml");
 				Assert.IsTrue(File.Exists(expectedFileName), $"Expected file not found: {expectedFileName}");
