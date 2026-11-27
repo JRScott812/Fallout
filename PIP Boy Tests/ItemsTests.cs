@@ -1,7 +1,9 @@
-using Pip_Boy_Classes.Items;
-using Pip_Boy_Classes.Objects;
 using System;
 using System.IO;
+using System.Reflection;
+
+using Pip_Boy_Classes.Items;
+using Pip_Boy_Classes.Objects;
 
 namespace PIP_Boy_Tests
 {
@@ -20,7 +22,6 @@ namespace PIP_Boy_Tests
 
 		private static string serializedItemsFilesFolder = string.Empty;
 		private static string[] serializedItemFilePaths = [];
-		public static string[] serializedItemFiles => Directory.GetFiles(serializedItemsFilesFolder, "*.xml");
 
 		[ClassInitialize]
 		public static void ClassInitialize(TestContext context)
@@ -42,52 +43,31 @@ namespace PIP_Boy_Tests
 		{
 			foreach (string filePath in serializedItemFilePaths)
 			{
-				Assert.IsTrue(serializedItemFiles.Contains(filePath));
+				Assert.IsTrue(File.Exists(filePath), $"Expected serialized file not found: {filePath}");
 			}
 		}
 
 		[TestMethod]
 		public void ItemDeserialization()
 		{
-			// Check tag-to-type casting
-			Type[] expectedTypes = [typeof(Weapon), typeof(TorsoPiece), typeof(HeadPiece), typeof(Ammo), typeof(Aid), typeof(Misc)];
-			Type[] actualTypes = new Type[Items.Length];
+			MethodInfo fromFile = typeof(PipBoySerializer).GetMethod(nameof(PipBoySerializer.FromFile))
+				?? throw new InvalidOperationException("PipBoySerializer.FromFile<T> was not found.");
 
-			for (int i = 0; i < serializedItemFiles.Length; i++)
+			for (int i = 0; i < Items.Length; i++)
 			{
-				string filePath = serializedItemFiles[i];
+				Item expected = Items[i];
+				string filePath = serializedItemFilePaths[i];
 				Type type = PipBoySerializer.GetTypeFromXML(filePath);
-				actualTypes[i] = type;
-			}
+				Assert.AreEqual(expected.GetType(), type, $"Serialized type should match for {expected.Name}");
 
-			for (int i = 0; i < expectedTypes.Length; i++)
-			{
-				Assert.IsTrue(actualTypes.Contains(expectedTypes[i]));
-			}
-
-			// Deserialize each file and compare to Items array by matching file name to item.Name
-			foreach (Item item in Items)
-			{
-				string expectedFileName = Path.Combine(serializedItemsFilesFolder, item.Name + ".xml");
-				Assert.IsTrue(File.Exists(expectedFileName), $"Expected file not found: {expectedFileName}");
-
-				Type type = PipBoySerializer.GetTypeFromXML(expectedFileName);
-				Item? deserialized = type.Name switch
-				{
-					nameof(Weapon) => PipBoySerializer.FromFile<Weapon>(expectedFileName),
-					nameof(TorsoPiece) => PipBoySerializer.FromFile<TorsoPiece>(expectedFileName),
-					nameof(HeadPiece) => PipBoySerializer.FromFile<HeadPiece>(expectedFileName),
-					nameof(Ammo) => PipBoySerializer.FromFile<Ammo>(expectedFileName),
-					nameof(Aid) => PipBoySerializer.FromFile<Aid>(expectedFileName),
-					nameof(Misc) => PipBoySerializer.FromFile<Misc>(expectedFileName),
-					_ => throw new InvalidOperationException($"Unknown type: {type.Name}")
-				};
-
-				Assert.IsNotNull(deserialized, $"Deserialized item should not be null for {item.Name}");
-				Assert.AreEqual(item.GetType(), deserialized.GetType(), $"Types should match for {item.Name}");
-				Assert.AreEqual(item.Name, deserialized.Name, $"Names should match for {item.Name}");
-				Assert.AreEqual(item.Weight, deserialized.Weight, $"Weights should match for {item.Name}");
-				Assert.AreEqual(item.Value, deserialized.Value, $"Values should match for {item.Name}");
+				object? result = fromFile.MakeGenericMethod(type).Invoke(null, [filePath]);
+				Assert.IsNotNull(result, $"Deserialized item should not be null for {expected.Name}");
+				Assert.IsInstanceOfType(result, type, $"Deserialized type should match for {expected.Name}");
+				Assert.AreEqual(type, result.GetType(), $"Deserialized type should exactly match for {expected.Name}");
+				Item deserialized = (Item)result;
+				Assert.AreEqual(expected.Name, deserialized.Name, $"Names should match for {expected.Name}");
+				Assert.AreEqual(expected.Weight, deserialized.Weight, $"Weights should match for {expected.Name}");
+				Assert.AreEqual(expected.Value, deserialized.Value, $"Values should match for {expected.Name}");
 			}
 		}
 	}

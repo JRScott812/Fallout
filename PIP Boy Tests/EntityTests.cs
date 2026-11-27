@@ -1,15 +1,16 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+
 using Pip_Boy_Classes.Entities;
 using Pip_Boy_Classes.Entities.Creatures;
 using Pip_Boy_Classes.Entities.Mutants;
 using Pip_Boy_Classes.Entities.Robots;
 using Pip_Boy_Classes.Objects;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace PIP_Boy_Tests
 {
-
 	[TestClass]
 	public class EntityTests
 	{
@@ -36,7 +37,6 @@ namespace PIP_Boy_Tests
 
 		private static string serializedEntitiesFilesFolder = string.Empty;
 		private static string[] serializedEntityFilePaths = [];
-		public static string[] serializedEntityFiles => Directory.GetFiles(serializedEntitiesFilesFolder, "*.xml");
 
 		[ClassInitialize]
 		public static void ClassInitialize(TestContext context)
@@ -70,12 +70,24 @@ namespace PIP_Boy_Tests
 		[TestMethod]
 		public void EntityDeserialization()
 		{
-			foreach (string filePath in serializedEntityFiles)
+			MethodInfo fromFile = typeof(PipBoySerializer).GetMethod(nameof(PipBoySerializer.FromFile))
+				?? throw new InvalidOperationException("PipBoySerializer.FromFile<T> was not found.");
+
+			foreach (string filePath in serializedEntityFilePaths)
 			{
 				Type type = PipBoySerializer.GetTypeFromXML(filePath);
-				Entity? deserialized = (Entity?)Activator.CreateInstance(type);
-				Assert.IsNotNull(deserialized);
-				Assert.AreEqual(type, deserialized.GetType());
+				Entity expected = Entities.Single(entity => entity.GetType() == type);
+				object? result = fromFile.MakeGenericMethod(type).Invoke(null, [filePath]);
+
+				Assert.IsNotNull(result, $"Deserialized entity should not be null for {type.Name}");
+				Assert.IsInstanceOfType(result, type, $"Deserialized type should match for {type.Name}");
+				Assert.AreEqual(type, result.GetType(), $"Deserialized type should exactly match for {type.Name}");
+				Entity deserialized = (Entity)result;
+				Assert.AreEqual(expected.Name, deserialized.Name, $"Names should match for {type.Name}");
+				Assert.AreEqual(expected.Level, deserialized.Level, $"Levels should match for {type.Name}");
+				Assert.AreEqual(expected.CurrentHealth, deserialized.CurrentHealth, $"Health should match for {type.Name}");
+				Assert.AreSequenceEqual(
+					[.. expected.SPECIAL.Select(attribute => attribute.Value)], [.. deserialized.SPECIAL.Select(attribute => attribute.Value)], $"SPECIAL attributes should match for {type.Name}");
 			}
 		}
 	}
